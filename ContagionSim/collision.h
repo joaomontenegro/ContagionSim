@@ -21,5 +21,20 @@ private:
 	float _radius2;
 };
 
+class MyCollision : public Collision
+{
+public:
+	MyCollision(const Params& params)
+		: Collision(ParamGet<float>(params, "radius", 3.5f))
+	{}
+	
+	
+	virtual ~MyCollision() = default;
+};
+
+namespace {
+	RegisterEntity<Collision, MyCollision> _myCollision("MyCollision");
+};
+
 
 #endif // _COLLISION_H_

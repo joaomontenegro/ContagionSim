@@ -1,6 +1,8 @@
 #ifndef _FACTORY_H_
 #define _FACTORY_H_
 
+#include "param.h"
+
 #include <string>
 #include <map>
 
@@ -8,14 +10,14 @@ template <class T>
 class Factory
 {
 public:
-	typedef T* (*Generator)();
+	typedef T* (*Generator)(const Params&);
 
 	static Factory<T>& get();
 
 	void registerClass(const std::string& name,
 				       const Generator& generator);
 
-	T* create(std::string name);
+	T* create(const std::string name, const Params& params);
 
 private:
 	Factory() = default;
@@ -33,16 +35,15 @@ public:
 		auto& f = Factory<T>::get();
 		f.registerClass(
 			name,
-			[]() { return static_cast<T*>(new TChild()); });
+			[](const Params& params) { return static_cast<T*>(new TChild(params)); });
 	}
 };
 
-template <class T> T* CreateEntity(const std::string& name)
+template <class T> T* CreateEntity(const std::string& name, const Params& params)
 {
 	auto& f = Factory<T>::get();
-	return f.create(name);
+	return f.create(name, params);
 }
-
 
 template <class T>
 Factory<T>&
@@ -62,12 +63,12 @@ Factory<T>::registerClass(const std::string& name,
 
 template <class T>
 T*
-Factory<T>::create(std::string name)
+Factory<T>::create(const std::string name, const Params& params)
 {
 	auto it = _registry.find(name);
 	if (it != _registry.end()) {
 		Generator& generator = it->second;
-		return generator();
+		return generator(params);
 	}
 
 	return nullptr;

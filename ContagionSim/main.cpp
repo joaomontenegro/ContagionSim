@@ -5,21 +5,29 @@
 #include "simulation.h"
 #include "glviewer.h"
 
+#include "param.h"
 #include "factory.h"
 
 #include <cstdlib>
 #include <ctime>
 
+#include <memory>
 #include <iostream>
 
 int main(int argc, char** argv) {
 	srand((unsigned int)time(NULL));
 
-	Arena arena(500, 500);
-	Collision collision(5.0f);
-	Movement movement(&arena);
-	Disease disease(0.1f);
-	Simulation sim(300, &arena, &collision, &movement, &disease);
+	Arena* arena = new MyArena();
+	
+	Params colParams;
+	colParams["radius"] = new ParamFloat(5.1f);
+
+	Collision* collision = CreateEntity<Collision>("MyCollision", colParams);
+	
+	Movement movement(arena);
+	Disease* disease = new MyDisease();
+	
+	Simulation sim(300, arena, collision, &movement, disease);
 
 	InitGLViewer(argc, argv, &sim);
 

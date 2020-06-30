@@ -1,9 +1,13 @@
 #include "collision.h"
 
+#include <iostream>
+
 Collision::Collision(float radius)
 	: _radius(radius)
 	, _radius2(_radius * _radius)
-{}
+{
+	std::cout << "--->" << radius << std::endl;
+}
 
 Collision::~Collision() {}
 
