@@ -4,20 +4,18 @@
 #include "random.h"
 
 Simulation::Simulation(int numAgents,
-					   Arena* arena,
 	                   Collision* collision,
 					   Movement* movement,
 	                   Disease* disease)
 	: _agents(numAgents)
-	, _arena(arena)
 	, _collision(collision)
 	, _movement(movement)
 	, _disease(disease)
 {
 	for (size_t i = 0; i < _agents.size(); ++i) {
 		Agent& agent = _agents[i];
-		agent.x = Rand(_arena->width);
-		agent.y = Rand(_arena->height);
+		agent.x = Rand(_movement->getWidth());
+		agent.y = Rand(_movement->getHeight());
 
 		// Direction
 		float angle = Rand((float)-M_PI, (float)M_PI);
@@ -35,6 +33,16 @@ Simulation::Simulation(int numAgents,
 		}
 	}
 }
+
+Simulation::Simulation(const Params& params,
+				       Collision* collision,
+				       Movement* movement,
+				       Disease* disease)
+	: Simulation(params.get<int>("numAgents", 100),
+		collision,
+		movement,
+		disease)
+{}
 
 Simulation::~Simulation() {}
 
@@ -97,4 +105,16 @@ Simulation::getNumCured()
 	}
 
 	return num;
+}
+
+float
+Simulation::getWidth()
+{
+	return _movement->getWidth();
+}
+
+float
+Simulation::getHeight()
+{
+	return _movement->getHeight();
 }

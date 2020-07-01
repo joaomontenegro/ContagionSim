@@ -50,9 +50,6 @@
     <ClInclude Include="random.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="arena.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="glviewer.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -1,4 +1,3 @@
-#include "arena.h"
 #include "collision.h"
 #include "disease.h"
 #include "movement.h"
@@ -17,19 +16,27 @@
 int main(int argc, char** argv) {
 	srand((unsigned int)time(NULL));
 
-	Arena* arena = new MyArena();
-	
+	// Collision
 	Params colParams;
-	colParams["radius"] = new ParamFloat(5.1f);
-
+	colParams.set<float>("radius", 5.1f);
 	Collision* collision = CreateEntity<Collision>("MyCollision", colParams);
 	
-	Movement movement(arena);
+	// Movement
+	Params movParams;
+	movParams.set<float>("width", 800.0f);
+	movParams.set<float>("height", 600.0f);
+	Movement* movement = CreateEntity<Movement>("MyMovement", movParams);
+	
+	// Disease
 	Disease* disease = new MyDisease();
 	
-	Simulation sim(300, arena, collision, &movement, disease);
+	// Simulation
+	Params simParams;
+	simParams.set<int>("numAgents", 200);
+	Simulation sim(simParams, collision, movement, disease);
 
 	InitGLViewer(argc, argv, &sim);
 
 	return 0;
 }
+

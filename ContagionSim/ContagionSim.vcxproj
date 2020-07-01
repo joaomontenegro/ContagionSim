@@ -150,7 +150,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agent.h" />
-    <ClInclude Include="arena.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="factory.h" />
     <ClInclude Include="glviewer.h" />

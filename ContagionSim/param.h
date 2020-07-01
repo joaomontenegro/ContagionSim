@@ -2,122 +2,161 @@
 #define _PARAM_H_
 
 #include <map>
+#include <vector>
 #include <string>
 
 #include <iostream>
 
-class Param {
+class Params {
 public:
-	Param() = default;
-	virtual ~Param() = default;
-};
 
-// TODO: use shared_ptr - otherwise the user needs to delete the Param*
-typedef std::map<std::string, Param*> Params;
+	Params() {}
 
-template<class T>
-T ParamGet(const Params& params, const std::string& name, T defaultValue) { return defaultValue;  }
+	~Params()
+	{
+		// Delete all Param objects in the map
+		for (auto i : _paramMap) {
+			delete i.second;
+		}
+	}
 
-/* Int Param */
-class ParamInt : public Param
-{
-public:
-	ParamInt(int value) : Param(), _value(value) {}
-	virtual ~ParamInt() = default;
+	template<class T>
+	void set(const std::string& key, T value) {}
 
-	int get() const { return _value; }
+	template<class T>
+	T get(const std::string& key, T defaultValue) const { return defaultValue; }
+
+	bool hasKey(const std::string& key)
+	{
+		return _paramMap.count(key) > 0;
+	}
+
+	void getKeys(std::vector<std::string>& keys)
+	{
+		keys.clear();
+		keys.reserve(_paramMap.size());
+		
+		for (auto i : _paramMap) {
+			keys.push_back(i.first);
+		}
+	}
 
 private:
-	int _value;
+
+	class Param {
+	public:
+		Param() = default;
+		virtual ~Param() = default;
+	};
+
+	//TODO: use shared_ptr<Param> instead of Param*
+	typedef std::map<std::string, Param*> ParamMap;
+	ParamMap _paramMap;
+
+	class ParamInt : public Param
+	{
+	public:
+		ParamInt(int v) : Param(), value(v) {}
+		virtual ~ParamInt() = default;
+		
+		int value;
+	};
+
+	class ParamFloat : public Param
+	{
+	public:
+		ParamFloat(float v) : Param(), value(v) {}
+		virtual ~ParamFloat() = default;
+		
+		float value;
+	};
+
+	class ParamDouble : public Param
+	{
+	public:
+		ParamDouble(double v) : Param(), value(v) {}
+		virtual ~ParamDouble() = default;
+		
+		double value;
+	};
+
 };
 
+//*** Param Setters ***//
 template<>
-inline int ParamGet<int>(const Params& params, const std::string& name, int defaultValue)
+inline void Params::set<int>(const std::string& key, int value)
 {
-	Params::const_iterator it = params.find(name);
-	if (it == params.end()) {
-		//TODO Warning ?
-		return defaultValue;
-	}
-
-	const ParamInt* p = dynamic_cast<const ParamInt*>(it->second);
-	if (p != nullptr) {
-		return p->get();
-	}
-	else {
-		//TODO Warning ?
-		return defaultValue;
-	}
+	_paramMap[key] = new ParamInt(value);
 }
 
-
-/* Float Param */
-class ParamFloat : public Param
-{
-public:
-	ParamFloat(float value) : Param(), _value(value) {}
-	virtual ~ParamFloat() = default;
-
-	float get() const { return _value; }
-
-private:
-	float _value;
-};
-
 template<>
-inline float ParamGet<float>(const Params& params, const std::string& name, float defaultValue)
+inline void Params::set<float>(const std::string& key, float value)
 {
-	Params::const_iterator it = params.find(name);
-	if (it == params.end()) {
-		//TODO Warning ?
-		std::cout << " Naaaa 1" << std::endl;
-		return defaultValue;
-	}
-	else {
-		std::cout << " Found " << name << std::endl;
-	}
-
-	const ParamFloat* p = dynamic_cast<const ParamFloat*>(it->second);
-	if (p != nullptr) {
-		return p->get();
-	}
-	else {
-		//TODO Warning ?
-		std::cout << " Naaaa 2" << std::endl;
-		return defaultValue;
-	}
+	_paramMap[key] = new ParamFloat(value);
 }
 
-/* Double Param */
-class ParamDouble : public Param
+template<>
+inline void Params::set<double>(const std::string& key, double value)
 {
-public:
-	ParamDouble(double value) : Param(), _value(value) {}
-	virtual ~ParamDouble() = default;
+	_paramMap[key] = new ParamDouble(value);
+}
 
-	double get() const { return _value; }
+//*** Param Getters ***//
+template<>
+inline int Params::get<int>(const std::string& key, int defaultValue) const
+{
+	ParamMap::const_iterator it = _paramMap.find(key);
+	if (it == _paramMap.end()) {
+		// TODO warn?
+		return defaultValue;
+	}
 
-private:
-	double _value;
-};
+	Param* param = it->second;
+	ParamInt* paramInt = dynamic_cast<ParamInt*>(param);
+	if (paramInt == nullptr) {
+		// TODO warn?
+		return defaultValue;
+	}
+
+	return paramInt->value;
+}
 
 template<>
-inline double ParamGet<double>(const Params& params, const std::string& name, double defaultValue)
+inline float Params::get<float>(const std::string& key, float defaultValue) const
 {
-	Params::const_iterator it = params.find(name);
-	if (it == params.end()) {
-		//TODO Warning ?
+	ParamMap::const_iterator it = _paramMap.find(key);
+	if (it == _paramMap.end()) {
+		// TODO warn?
 		return defaultValue;
 	}
 
-	const ParamDouble* p = dynamic_cast<const ParamDouble*>(it->second);
-	if (p != nullptr) {
-		return p->get();
-	}
-	else {
-		//TODO Warning ?
+	Param* param = it->second;
+	ParamFloat* paramFloat = dynamic_cast<ParamFloat*>(param);
+	if (paramFloat == nullptr) {
+		// TODO warn?
 		return defaultValue;
 	}
+
+	return paramFloat->value;
+}
+
+template<>
+inline double Params::get<double>(const std::string& key, double defaultValue) const
+{
+	ParamMap::const_iterator it = _paramMap.find(key);
+	if (it == _paramMap.end()) {
+		// TODO warn?
+		return defaultValue;
+	}
+
+	Param* param = it->second;
+	ParamDouble* paramDouble = dynamic_cast<ParamDouble*>(param);
+	if (paramDouble == nullptr) {
+		// TODO warn?
+		return defaultValue;
+	}
+
+	return paramDouble->value;
 }
 
 #endif // _PARAM_H_

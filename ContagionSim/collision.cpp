@@ -5,9 +5,11 @@
 Collision::Collision(float radius)
 	: _radius(radius)
 	, _radius2(_radius * _radius)
-{
-	std::cout << "--->" << radius << std::endl;
-}
+{}
+
+Collision::Collision(const Params& params)
+	: Collision(params.get<float>("radius", 3.5f))
+{}
 
 Collision::~Collision() {}
 

@@ -2,7 +2,6 @@
 #define _SIMULATION_H_
 
 #include "agent.h"
-#include "arena.h"
 #include "collision.h"
 #include "movement.h"
 #include "disease.h"
@@ -11,9 +10,13 @@ class Simulation
 {
 public:
 	Simulation(int numAgents,
-		       Arena* arena,
 			   Collision* collision,
 			   Movement* movement,
+		       Disease* disease);
+
+	Simulation(const Params& params,
+		       Collision* collision,
+		       Movement* movement,
 		       Disease* disease);
 
 	~Simulation();
@@ -29,12 +32,11 @@ public:
 	size_t getNumInfected();
 	size_t getNumCured();
 
-	float getWidth()  { return _arena->width;  }
-	float getHeight() { return _arena->height; }
+	float getWidth();
+	float getHeight();
 
 private:
 	AgentsVec _agents;
-	Arena* _arena;
 	Collision* _collision;
 	Movement* _movement;
 	Disease* _disease;
