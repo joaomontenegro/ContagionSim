@@ -13,6 +13,33 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\plugins">
+      <UniqueIdentifier>{69b0c45a-76b7-49ad-9580-cdd217eeb1c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\plugins\movements">
+      <UniqueIdentifier>{e117ff08-633a-4ea9-a16f-9c72435dcb82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\plugins\collisions">
+      <UniqueIdentifier>{fe6773c4-eadc-4da0-bf80-7cc7e0eaf1f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\plugins">
+      <UniqueIdentifier>{58c366d5-6149-47c5-b46a-e8a1dcd99df2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\plugins\movements">
+      <UniqueIdentifier>{34314183-30dc-4f9c-acc1-f6b6cda488a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\plugins\collisions">
+      <UniqueIdentifier>{bc0b4d7e-a461-47b1-8325-b6ad573132f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\factory">
+      <UniqueIdentifier>{d2810b18-3080-4265-af66-62ed313d7870}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\plugins\diseases">
+      <UniqueIdentifier>{d65d4c52-9d14-460e-93ef-fc05feb4ceed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\plugins\diseases">
+      <UniqueIdentifier>{a800eca6-e615-48a4-b7d7-09ea361957a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,16 +48,28 @@
     <ClCompile Include="simulation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="collision.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="movement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="glviewer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="simpleMovement.cpp">
+      <Filter>Source Files\plugins\movements</Filter>
+    </ClCompile>
+    <ClCompile Include="simpleCollision.cpp">
+      <Filter>Source Files\plugins\collisions</Filter>
+    </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>Source Files\plugins</Filter>
+    </ClCompile>
+    <ClCompile Include="movement.cpp">
+      <Filter>Source Files\plugins</Filter>
+    </ClCompile>
     <ClCompile Include="disease.cpp">
+      <Filter>Source Files\plugins</Filter>
+    </ClCompile>
+    <ClCompile Include="simpleDisease.cpp">
+      <Filter>Source Files\plugins\diseases</Filter>
+    </ClCompile>
+    <ClCompile Include="log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,13 +77,7 @@
     <ClInclude Include="simulation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="collision.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="agent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="movement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="random.h">
@@ -56,13 +89,31 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="disease.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="simpleMovement.h">
+      <Filter>Header Files\plugins\movements</Filter>
+    </ClInclude>
+    <ClInclude Include="simpleCollision.h">
+      <Filter>Header Files\plugins\collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="movement.h">
+      <Filter>Header Files\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="collision.h">
+      <Filter>Header Files\plugins</Filter>
     </ClInclude>
     <ClInclude Include="factory.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\factory</Filter>
     </ClInclude>
     <ClInclude Include="param.h">
+      <Filter>Header Files\factory</Filter>
+    </ClInclude>
+    <ClInclude Include="disease.h">
+      <Filter>Header Files\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="simpleDisease.h">
+      <Filter>Header Files\plugins\diseases</Filter>
+    </ClInclude>
+    <ClInclude Include="log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

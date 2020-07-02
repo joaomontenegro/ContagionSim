@@ -6,6 +6,7 @@
 
 #include "param.h"
 #include "factory.h"
+#include "log.h"
 
 #include <cstdlib>
 #include <ctime>
@@ -16,25 +17,27 @@
 int main(int argc, char** argv) {
 	srand((unsigned int)time(NULL));
 
-	// Collision
-	Params colParams;
-	colParams.set<float>("radius", 5.1f);
-	Collision* collision = CreateEntity<Collision>("MyCollision", colParams);
-	
-	// Movement
-	Params movParams;
-	movParams.set<float>("width", 800.0f);
-	movParams.set<float>("height", 600.0f);
-	Movement* movement = CreateEntity<Movement>("MyMovement", movParams);
-	
-	// Disease
-	Disease* disease = new MyDisease();
-	
-	// Simulation
-	Params simParams;
-	simParams.set<int>("numAgents", 200);
-	Simulation sim(simParams, collision, movement, disease);
+	setLogLevel(LogLevel::Info);
 
+	//TODO: divide params into groups instead of these points?
+	Params params;
+	params.set<std::string>("collision", "SimpleCollision");
+	params.set<std::string>("movement",  "SimpleMovement");
+	params.set<std::string>("disease",   "SimpleDisease");
+	params.set<float>("collision.radius", 5.1f);
+	params.set<float>("movement.width", 800.0f);
+	params.set<float>("movement.height", 600.0f);
+	params.set<float>("disease.rate", 0.1f);
+	params.set<int>("simulation.numAgents", 200);
+
+	// Simulation
+	Simulation sim(params);
+	if (!sim.isValid()) {
+		error("Invalid Simulation - terminating...");
+		return -1;
+	} 
+
+	// Run simulation in the viewer
 	InitGLViewer(argc, argv, &sim);
 
 	return 0;

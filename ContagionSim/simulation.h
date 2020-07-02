@@ -1,6 +1,7 @@
 #ifndef _SIMULATION_H_
 #define _SIMULATION_H_
 
+#include "param.h"
 #include "agent.h"
 #include "collision.h"
 #include "movement.h"
@@ -9,20 +10,15 @@
 class Simulation
 {
 public:
-	Simulation(int numAgents,
-			   Collision* collision,
-			   Movement* movement,
-		       Disease* disease);
-
-	Simulation(const Params& params,
-		       Collision* collision,
-		       Movement* movement,
-		       Disease* disease);
-
+	Simulation(const Params& params);
 	~Simulation();
 
+	bool isValid() { return _isValid; }
+	
 	void step();
 
+public:
+	//** Getters **//
 	const AgentsVec& getAgents() { return _agents; }
 
 	float getCollisionRadius() { return _collision->getRadius(); }
@@ -36,10 +32,17 @@ public:
 	float getHeight();
 
 private:
+	bool _initPlugins(const Params& params);
+	bool _initAgents(const Params& params);
+	
+private:
+	bool _isValid = false;
+	
+	Collision* _collision = nullptr;
+	Movement*  _movement  = nullptr;
+	Disease*   _disease   = nullptr;
+
 	AgentsVec _agents;
-	Collision* _collision;
-	Movement* _movement;
-	Disease* _disease;
 };
 
 #endif // _SIMULATION_H_

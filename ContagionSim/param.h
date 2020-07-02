@@ -1,11 +1,12 @@
 #ifndef _PARAM_H_
 #define _PARAM_H_
 
+#include "log.h"
+
 #include <map>
 #include <vector>
 #include <string>
 
-#include <iostream>
 
 class Params {
 public:
@@ -80,6 +81,15 @@ private:
 		double value;
 	};
 
+	class ParamString : public Param
+	{
+	public:
+		ParamString(std::string v) : Param(), value(v) {}
+		virtual ~ParamString() = default;
+
+		std::string value;
+	};
+
 };
 
 //*** Param Setters ***//
@@ -101,20 +111,26 @@ inline void Params::set<double>(const std::string& key, double value)
 	_paramMap[key] = new ParamDouble(value);
 }
 
+template<>
+inline void Params::set<std::string>(const std::string& key, std::string value)
+{
+	_paramMap[key] = new ParamString(value);
+}
+
 //*** Param Getters ***//
 template<>
 inline int Params::get<int>(const std::string& key, int defaultValue) const
 {
 	ParamMap::const_iterator it = _paramMap.find(key);
 	if (it == _paramMap.end()) {
-		// TODO warn?
+		warn("ParamInt not found: '" + key + "', using default: " + std::to_string(defaultValue));
 		return defaultValue;
 	}
 
 	Param* param = it->second;
 	ParamInt* paramInt = dynamic_cast<ParamInt*>(param);
 	if (paramInt == nullptr) {
-		// TODO warn?
+		warn("Param is not a ParamInt: '" + key + "', using default: " + std::to_string(defaultValue));
 		return defaultValue;
 	}
 
@@ -126,14 +142,14 @@ inline float Params::get<float>(const std::string& key, float defaultValue) cons
 {
 	ParamMap::const_iterator it = _paramMap.find(key);
 	if (it == _paramMap.end()) {
-		// TODO warn?
+		warn("ParamFloat not found: '" + key + "', using default: " + std::to_string(defaultValue));
 		return defaultValue;
 	}
 
 	Param* param = it->second;
 	ParamFloat* paramFloat = dynamic_cast<ParamFloat*>(param);
 	if (paramFloat == nullptr) {
-		// TODO warn?
+		warn("Param is not a ParamFloat: '" + key + "', using default: " + std::to_string(defaultValue));
 		return defaultValue;
 	}
 
@@ -145,18 +161,37 @@ inline double Params::get<double>(const std::string& key, double defaultValue) c
 {
 	ParamMap::const_iterator it = _paramMap.find(key);
 	if (it == _paramMap.end()) {
-		// TODO warn?
+		warn("ParamDouble not found: '" + key + "', using default: " + std::to_string(defaultValue));
 		return defaultValue;
 	}
 
 	Param* param = it->second;
 	ParamDouble* paramDouble = dynamic_cast<ParamDouble*>(param);
 	if (paramDouble == nullptr) {
-		// TODO warn?
+		warn("Param is not a ParamDouble: '" + key + "', using default: " + std::to_string(defaultValue));
 		return defaultValue;
 	}
 
 	return paramDouble->value;
+}
+
+template<>
+inline std::string Params::get<std::string>(const std::string& key, std::string defaultValue) const
+{
+	ParamMap::const_iterator it = _paramMap.find(key);
+	if (it == _paramMap.end()) {
+		warn("ParamString not found: '" + key + "', using default: " + defaultValue);
+		return defaultValue;
+	}
+
+	Param* param = it->second;
+	ParamString* paramString = dynamic_cast<ParamString*>(param);
+	if (paramString == nullptr) {
+		warn("Param is not a ParamString: '" + key + "', using default: " + defaultValue);
+		return defaultValue;
+	}
+
+	return paramString->value;
 }
 
 #endif // _PARAM_H_
