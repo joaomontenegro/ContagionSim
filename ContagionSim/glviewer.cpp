@@ -77,7 +77,7 @@ void InitGLViewer(int argc, char** argv, Simulation* sim)
 	glPointSize(radius);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(0.0, 499.0, 0.0, 499.0);
+	gluOrtho2D(0.0, width, 0.0, height);
 
 	glutMainLoop();
 }

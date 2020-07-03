@@ -22,8 +22,9 @@ SimpleMovement::move(AgentsVec& agents)
 		if (agent.y < 0) { agent.dy *= -1; }
 		if (agent.y >= _height) { agent.dy *= -1; }
 
+		// TODO
 		// Update velocity
-		agent.dx += Rand(-0.01f, 0.01f);
-		agent.dy += Rand(-0.01f, 0.01f);
+		//agent.dx += Rand(-0.01f, 0.01f);
+		//agent.dy += Rand(-0.01f, 0.01f);
 	}
 }

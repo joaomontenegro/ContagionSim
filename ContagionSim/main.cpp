@@ -17,7 +17,7 @@
 int main(int argc, char** argv) {
 	srand((unsigned int)time(NULL));
 
-	setLogLevel(LogLevel::Info);
+	Log::setLogLevel(Log::LogLevel::Info);
 
 	//TODO: divide params into groups instead of these points?
 	Params params;
@@ -29,11 +29,14 @@ int main(int argc, char** argv) {
 	params.set<float>("movement.height", 600.0f);
 	params.set<float>("disease.rate", 0.1f);
 	params.set<int>("simulation.numAgents", 200);
+	params.set<int>("simulation.numInitialInfected", 1);
+	params.set<float>("agent.minSpeed", 0.1f); //TODO: should these be in movement?
+	params.set<float>("agent.maxSpeed", 1.0f); //TODO: should these be in movement?
 
 	// Simulation
 	Simulation sim(params);
 	if (!sim.isValid()) {
-		error("Invalid Simulation - terminating...");
+		Log::error("Invalid Simulation - terminating...");
 		return -1;
 	} 
 

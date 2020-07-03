@@ -7,7 +7,6 @@
 #include <vector>
 #include <string>
 
-
 class Params {
 public:
 
@@ -20,6 +19,8 @@ public:
 			delete i.second;
 		}
 	}
+
+	enum class Type  { Int, Float, Double, String };
 
 	template<class T>
 	void set(const std::string& key, T value) {}
@@ -48,6 +49,8 @@ private:
 	public:
 		Param() = default;
 		virtual ~Param() = default;
+
+		virtual Type getType() = 0;
 	};
 
 	//TODO: use shared_ptr<Param> instead of Param*
@@ -59,7 +62,7 @@ private:
 	public:
 		ParamInt(int v) : Param(), value(v) {}
 		virtual ~ParamInt() = default;
-		
+		virtual Type getType() { return Type::Int; }
 		int value;
 	};
 
@@ -68,7 +71,7 @@ private:
 	public:
 		ParamFloat(float v) : Param(), value(v) {}
 		virtual ~ParamFloat() = default;
-		
+		virtual Type getType() { return Type::Float; }
 		float value;
 	};
 
@@ -77,7 +80,7 @@ private:
 	public:
 		ParamDouble(double v) : Param(), value(v) {}
 		virtual ~ParamDouble() = default;
-		
+		virtual Type getType() { return Type::Double; }
 		double value;
 	};
 
@@ -86,7 +89,7 @@ private:
 	public:
 		ParamString(std::string v) : Param(), value(v) {}
 		virtual ~ParamString() = default;
-
+		virtual Type getType() { return Type::String; }
 		std::string value;
 	};
 
@@ -123,14 +126,14 @@ inline int Params::get<int>(const std::string& key, int defaultValue) const
 {
 	ParamMap::const_iterator it = _paramMap.find(key);
 	if (it == _paramMap.end()) {
-		warn("ParamInt not found: '" + key + "', using default: " + std::to_string(defaultValue));
+		Log::warn("ParamInt not found: '" + key + "', using default: " + std::to_string(defaultValue));
 		return defaultValue;
 	}
 
 	Param* param = it->second;
 	ParamInt* paramInt = dynamic_cast<ParamInt*>(param);
 	if (paramInt == nullptr) {
-		warn("Param is not a ParamInt: '" + key + "', using default: " + std::to_string(defaultValue));
+		Log::warn("Param is not a ParamInt: '" + key + "', using default: " + std::to_string(defaultValue));
 		return defaultValue;
 	}
 
@@ -142,14 +145,14 @@ inline float Params::get<float>(const std::string& key, float defaultValue) cons
 {
 	ParamMap::const_iterator it = _paramMap.find(key);
 	if (it == _paramMap.end()) {
-		warn("ParamFloat not found: '" + key + "', using default: " + std::to_string(defaultValue));
+		Log::warn("ParamFloat not found: '" + key + "', using default: " + std::to_string(defaultValue));
 		return defaultValue;
 	}
 
 	Param* param = it->second;
 	ParamFloat* paramFloat = dynamic_cast<ParamFloat*>(param);
 	if (paramFloat == nullptr) {
-		warn("Param is not a ParamFloat: '" + key + "', using default: " + std::to_string(defaultValue));
+		Log::warn("Param is not a ParamFloat: '" + key + "', using default: " + std::to_string(defaultValue));
 		return defaultValue;
 	}
 
@@ -161,14 +164,14 @@ inline double Params::get<double>(const std::string& key, double defaultValue) c
 {
 	ParamMap::const_iterator it = _paramMap.find(key);
 	if (it == _paramMap.end()) {
-		warn("ParamDouble not found: '" + key + "', using default: " + std::to_string(defaultValue));
+		Log::warn("ParamDouble not found: '" + key + "', using default: " + std::to_string(defaultValue));
 		return defaultValue;
 	}
 
 	Param* param = it->second;
 	ParamDouble* paramDouble = dynamic_cast<ParamDouble*>(param);
 	if (paramDouble == nullptr) {
-		warn("Param is not a ParamDouble: '" + key + "', using default: " + std::to_string(defaultValue));
+		Log::warn("Param is not a ParamDouble: '" + key + "', using default: " + std::to_string(defaultValue));
 		return defaultValue;
 	}
 
@@ -180,14 +183,14 @@ inline std::string Params::get<std::string>(const std::string& key, std::string 
 {
 	ParamMap::const_iterator it = _paramMap.find(key);
 	if (it == _paramMap.end()) {
-		warn("ParamString not found: '" + key + "', using default: " + defaultValue);
+		Log::warn("ParamString not found: '" + key + "', using default: " + defaultValue);
 		return defaultValue;
 	}
 
 	Param* param = it->second;
 	ParamString* paramString = dynamic_cast<ParamString*>(param);
 	if (paramString == nullptr) {
-		warn("Param is not a ParamString: '" + key + "', using default: " + defaultValue);
+		Log::warn("Param is not a ParamString: '" + key + "', using default: " + defaultValue);
 		return defaultValue;
 	}
 

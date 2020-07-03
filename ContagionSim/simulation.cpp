@@ -92,30 +92,30 @@ Simulation::_initPlugins(const Params& params)
 	std::string colKey = params.get<std::string>("collision", "SimpleCollision");
 	_collision = CreateEntity<Collision>(colKey, params);
 	if (!_collision) {
-		error("Invalid Collision Plugin: " + colKey);
+		Log::error("Invalid Collision Plugin: " + colKey);
 		return false;
 	} else {
-		info("Collision Plugin: " + colKey);
+		Log::info("Collision Plugin: " + colKey);
 	}
 	
 	// Movement Plugin
 	std::string movKey = params.get<std::string>("movement", "SimpleMovement");
 	_movement = CreateEntity<Movement>(movKey, params);
 	if (!_movement) {
-		error("Invalid Movement Plugin: " + movKey);
+		Log::error("Invalid Movement Plugin: " + movKey);
 		return false;
 	} else {
-		info(" Movement Plugin: " + movKey);
+		Log::info(" Movement Plugin: " + movKey);
 	}
 
 	// Disease Plugin
 	std::string disKey = params.get<std::string>("disease", "SimpleDisease");
 	_disease = CreateEntity<Disease>(disKey, params);
 	if (!_disease) {
-		error("Invalid Disease Plugin: " + disKey);
+		Log::error("Invalid Disease Plugin: " + disKey);
 		return false;
 	} else {
-		info("  Disease Plugin: " + disKey);
+		Log::info("  Disease Plugin: " + disKey);
 	}
 
 	return true;
@@ -127,7 +127,7 @@ Simulation::_initAgents(const Params& params)
 	int numAgents = params.get<int>("simulation.numAgents", 0);
 
 	if (numAgents <= 0) {
-		error("Invalid number of agents: " + std::to_string(numAgents));
+		Log::error("Invalid number of agents: " + std::to_string(numAgents));
 		return false;
 	}
 
@@ -138,14 +138,14 @@ Simulation::_initAgents(const Params& params)
 
 		// Direction
 		float angle = Rand((float)-M_PI, (float)M_PI);
-		float speed = Rand(0.1f, 1.0f); // TODO parameterize
+		float minSpeed = params.get<float>("agent.minSpeed", 0.1f);
+		float maxSpeed = params.get<float>("agent.maxSpeed", 1.0f);
+		float speed = Rand(minSpeed, maxSpeed);
 		agent.dx = speed * cos(angle);
 		agent.dy = speed * sin(angle);
 
-		// TODO: specify percentage infected & cured at beginning
 		// Infected
-		int NUM_INFECTED = 1;
-		if (i < NUM_INFECTED) {
+		if (i < params.get<int>("simulation.numInitialInfected", 1)) {
 			agent.infectionAge = 0;
 		}
 		else {
