@@ -16,6 +16,7 @@ public:
 	~Simulation();
 
 	bool isValid() { return _isValid; }
+	void invalidate() { _isValid = false;  }
 	
 	void step();
 
