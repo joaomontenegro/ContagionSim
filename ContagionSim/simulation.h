@@ -3,16 +3,11 @@
 
 #include "param.h"
 #include "agent.h"
-/*
-#include "collision.h"
-#include "movement.h"
-#include "disease.h"
-*/
 
+// Forward declaration to avoid cyclical dependency
 class Collision;
 class Movement;
 class Disease;
-
 
 class Simulation
 {
@@ -33,7 +28,7 @@ public:
 	const Movement*  getMovement() const;
 	const Disease*   getDisease() const;
 
-	const AgentsVec& getAgents() const;
+	AgentsVec& getAgents();
 	size_t getNumAgents() const;
 	size_t getNumHealthy() const;
 	size_t getNumInfected() const;
@@ -54,6 +49,7 @@ private:
 	Disease*   _disease   = nullptr;
 
 	AgentsVec _agents;
+	AgentsPairVec _collidedAgents;
 };
 
 #endif // _SIMULATION_H_

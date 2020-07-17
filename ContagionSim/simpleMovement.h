@@ -12,7 +12,7 @@ public:
 	SimpleMovement(const Params& params);
 	virtual ~SimpleMovement();
 
-	virtual void move(AgentsVec& agents);
+	virtual void move();
 };
 
 namespace {

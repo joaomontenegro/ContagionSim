@@ -11,7 +11,10 @@ public:
 	SimpleCollision(const Params& params);
 	virtual ~SimpleCollision();
 
-	virtual bool collide(Agent& a, Agent& b);
+	virtual void collide(AgentsPairVec& result);
+
+private:
+	inline bool calcCollision(const Agent& a, const Agent& b);
 };
 
 namespace {

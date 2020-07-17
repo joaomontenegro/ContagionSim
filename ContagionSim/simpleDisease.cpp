@@ -8,26 +8,33 @@ SimpleDisease::SimpleDisease(const Params& params)
 SimpleDisease::~SimpleDisease() {}
 
 void
-SimpleDisease::transmit(Agent& agentA, Agent& agentB)
+SimpleDisease::transmit(AgentsPairVec& agentPairs)
 {
-	if (agentA.isInfected() != agentB.isInfected()) {
-		if (SampleProbability(_rate)) {
-			if (agentA.isHealthy()) { agentA.infectionAge = 0; }
-			if (agentB.isHealthy()) { agentB.infectionAge = 0; }
+	for (auto& ap : agentPairs) {
+		Agent& agentA = ap.first;
+		Agent& agentB = ap.second;
+
+		if (agentA.isInfected() != agentB.isInfected()) {
+			if (SampleProbability(_rate)) {
+				if (agentA.isHealthy()) { agentA.infectionAge = 0; }
+				if (agentB.isHealthy()) { agentB.infectionAge = 0; }
+			}
 		}
 	}
 }
 
 void
-SimpleDisease::step(Agent& agent)
+SimpleDisease::step()
 {
-	// Update infection
-	if (agent.infectionAge >= 0) {
-		// TODO: Take time step into account
-		agent.infectionAge++;
+	for (auto& agent : _simulation->getAgents()) {
+		// Update infection
+		if (agent.infectionAge >= 0) {
+			// TODO: Take time step into account
+			agent.infectionAge++;
 
-		if (agent.infectionAge > 2000) {
-			agent.infectionAge = -2;
+			if (agent.infectionAge > 2000) {
+				agent.infectionAge = -2;
+			}
 		}
 	}
 }

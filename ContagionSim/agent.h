@@ -18,5 +18,8 @@ struct Agent {
 };
 
 typedef std::vector<Agent> AgentsVec;
+typedef std::pair<Agent&, Agent&> AgentsPair;
+typedef std::vector<AgentsPair> AgentsPairVec;
+
 
 #endif // _AGENT_H_

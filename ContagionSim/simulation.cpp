@@ -21,22 +21,16 @@ void
 Simulation::step()
 {
 	// Move all the agents and update their velocities
-	_movement->move(_agents);
+	_movement->move();
 
-	// Collision with other agents
-	for (size_t i = 0; i < _agents.size(); ++i) {
-		Agent& agent = _agents[i];
-		
-		for (size_t j = i + 1; j < _agents.size(); ++j) {
-			Agent& other = _agents[j];
-			if (_collision->collide(agent, other)) {
-				_disease->transmit(agent, other);
-			}
-		}
+	// Detect any collision
+	_collidedAgents.clear();
+	_collision->collide(_collidedAgents);
 
-		// Update disease
-		_disease->step(agent);		
-	}
+	// Transmit the disease on the collisions and update
+	// the disease in the agents.
+	_disease->transmit(_collidedAgents);
+    _disease->step();
 }
 
 float
@@ -69,8 +63,8 @@ Simulation::getDisease() const
 	return _disease;
 }
 
-const AgentsVec&
-Simulation::getAgents() const
+AgentsVec&
+Simulation::getAgents()
 {
 	return _agents;
 }
@@ -132,6 +126,7 @@ Simulation::_initPlugins(const Params& params)
 	} else {
 		Log::info("Collision Plugin: " + colKey);
 	}
+	_collision->setSimulation(this);
 	
 	// Movement Plugin
 	std::string movKey = params.get<std::string>("movement", "SimpleMovement");
@@ -153,6 +148,7 @@ Simulation::_initPlugins(const Params& params)
 	} else {
 		Log::info("  Disease Plugin: " + disKey);
 	}
+	_disease->setSimulation(this);
 
 	return true;
 }
@@ -190,6 +186,8 @@ Simulation::_initAgents(const Params& params)
 
 		_agents.push_back(agent);
 	}
+
+	_collidedAgents.reserve(numAgents);
 
 	return true;
 }

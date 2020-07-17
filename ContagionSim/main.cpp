@@ -21,13 +21,13 @@ int main(int argc, char** argv) {
 
 	//TODO: divide params into groups instead of these points?
 	Params params;
-	params.set<std::string>("collision", "GridCollision");
+	params.set<std::string>("collision", "SimpleCollision");
 	params.set<std::string>("movement",  "SimpleMovement");
 	params.set<std::string>("disease",   "SimpleDisease");
 	params.set<float>("collision.radius", 5.1f);
 	params.set<float>("collision.gridSize", 20.0f);
 	params.set<float>("disease.rate", 0.1f);
-	params.set<int>("simulation.numAgents", 1000);
+	params.set<int>("simulation.numAgents", 100);
 	params.set<int>("simulation.numInitialInfected", 1);
 	params.set<float>("simulation.width", 800.0f);
 	params.set<float>("simulation.height", 600.0f);

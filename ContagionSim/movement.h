@@ -11,12 +11,12 @@ public:
 	Movement();
 	virtual ~Movement();
 
-	virtual void move(AgentsVec& agents) = 0;
+	virtual void move() = 0;
 
-	void setSimulation(const Simulation* sim) { _simulation = sim; }
+	void setSimulation(Simulation* sim) { _simulation = sim; }
 
 protected:
-	const Simulation* _simulation = nullptr;
+	Simulation* _simulation = nullptr;
 };
 
 

@@ -11,9 +11,9 @@ public:
 	SimpleDisease(const Params& params);
 	~SimpleDisease();
 
-	void transmit(Agent& agentA, Agent& agentB);
+	void transmit(AgentsPairVec& agentPairs);
 
-	void step(Agent& agent);
+	void step();
 };
 
 namespace {

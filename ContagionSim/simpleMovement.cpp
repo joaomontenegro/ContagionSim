@@ -6,9 +6,9 @@ SimpleMovement::SimpleMovement(const Params& params) {}
 SimpleMovement::~SimpleMovement() {}
 
 void
-SimpleMovement::move(AgentsVec& agents)
+SimpleMovement::move()
 {
-	for (Agent& agent : agents) {
+	for (Agent& agent : _simulation->getAgents()) {
 		// Update position
 		agent.x += agent.dx;
 		agent.y += agent.dy;

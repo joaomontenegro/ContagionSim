@@ -1,6 +1,7 @@
 #ifndef _DISEASE_H_
 #define _DISEASE_H_
 
+#include "simulation.h"
 #include "agent.h"
 
 class Disease
@@ -9,12 +10,16 @@ public:
 	Disease(float rate);
 	~Disease();
 
-	virtual void transmit(Agent& agentA, Agent& agentB) = 0;
+	virtual void transmit(AgentsPairVec& agentPairs) = 0;
 
-	virtual void step(Agent& agent) = 0;
+	virtual void step() = 0;
+
+	void setSimulation(Simulation* sim) { _simulation = sim; }
 
 protected:
 	float _rate;
+
+	Simulation* _simulation = nullptr;
 };
 
 
