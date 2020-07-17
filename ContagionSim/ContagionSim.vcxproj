@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="disease.cpp" />
+    <ClCompile Include="gridCollision.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="movement.cpp" />
     <ClCompile Include="glviewer.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="factory.h" />
     <ClInclude Include="glviewer.h" />
     <ClInclude Include="disease.h" />
+    <ClInclude Include="gridCollision.h" />
     <ClInclude Include="log.h" />
     <ClInclude Include="movement.h" />
     <ClInclude Include="param.h" />

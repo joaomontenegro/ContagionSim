@@ -11,10 +11,17 @@ int STEPS = -1;
 
 void _display()
 {
-	for (int i = 0; STEPS < 0 || i < STEPS; ++i) {
-		if (_sim == nullptr) return;
+	if (_sim == nullptr) return;
 
+	for (int i = 0; STEPS < 0 || i < STEPS; ++i) {
+		
+		auto startTime = std::chrono::system_clock::now();
+		
 		_sim->step();
+		
+		auto endTime = std::chrono::system_clock::now();
+		std::chrono::duration<double> elapsedTime = endTime - startTime;
+		std::cout << "\r" << 1.0 / elapsedTime.count() << " fps         " << std::flush;
 
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -54,7 +61,6 @@ void _display()
 		*/
 
 		//std::this_thread::sleep_for(std::chrono::milliseconds(1));
-
 	}
 }
 
@@ -68,7 +74,7 @@ void InitGLViewer(int argc, char** argv, Simulation* sim)
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowSize(int(width), int(height));
-	glutInitWindowPosition(0, 0);
+	glutInitWindowPosition(200, 200);
 	glutCreateWindow("Points");
 	glutDisplayFunc(_display);
 
