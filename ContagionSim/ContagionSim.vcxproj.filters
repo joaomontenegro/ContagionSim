@@ -122,6 +122,9 @@
     <ClInclude Include="gridCollision.h">
       <Filter>Header Files\plugins\collisions</Filter>
     </ClInclude>
+    <ClInclude Include="contagion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ContagionSim.rc">

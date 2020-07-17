@@ -3,9 +3,16 @@
 
 #include "param.h"
 #include "agent.h"
+/*
 #include "collision.h"
 #include "movement.h"
 #include "disease.h"
+*/
+
+class Collision;
+class Movement;
+class Disease;
+
 
 class Simulation
 {
@@ -19,17 +26,18 @@ public:
 
 public:
 	//** Getters **//
-	const AgentsVec& getAgents() { return _agents; }
+	float getWidth() const;
+	float getHeight() const;
 
-	float getCollisionRadius() { return _collision->getRadius(); }
+	const Collision* getCollision() const;
+	const Movement*  getMovement() const;
+	const Disease*   getDisease() const;
 
-	size_t getNumAgents() { return _agents.size(); }
-	size_t getNumHealthy();
-	size_t getNumInfected();
-	size_t getNumCured();
-
-	float getWidth();
-	float getHeight();
+	const AgentsVec& getAgents() const;
+	size_t getNumAgents() const;
+	size_t getNumHealthy() const;
+	size_t getNumInfected() const;
+	size_t getNumCured() const;
 
 private:
 	bool _initPlugins(const Params& params);
@@ -37,6 +45,9 @@ private:
 	
 private:
 	bool _isValid = false;
+
+	float _width;
+	float _height;
 	
 	Collision* _collision = nullptr;
 	Movement*  _movement  = nullptr;

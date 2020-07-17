@@ -8,7 +8,7 @@ Collision::Collision(float radius)
 Collision::~Collision() {}
 
 float
-Collision::getRadius()
+Collision::getRadius() const
 {
 	return _radius;
 }

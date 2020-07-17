@@ -1,5 +1,5 @@
 #include "glviewer.h"
-#include "simulation.h"
+#include "contagion.h"
 
 #include <chrono>
 #include <thread>
@@ -69,7 +69,7 @@ void InitGLViewer(int argc, char** argv, Simulation* sim)
 	_sim = sim;
 	float width  = _sim->getWidth();
 	float height = _sim->getHeight();
-	float radius = _sim->getCollisionRadius();
+	float radius = _sim->getCollision()->getRadius();
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);

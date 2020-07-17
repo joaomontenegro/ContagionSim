@@ -9,7 +9,7 @@ public:
 	Collision(float radius);
 	virtual ~Collision();
 
-	float getRadius();
+	float getRadius() const;
 
 	virtual bool collide(Agent& a, Agent& b) = 0;
 

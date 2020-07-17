@@ -4,8 +4,13 @@
 #include "factory.h"
 #include "random.h"
 #include "log.h"
+#include "collision.h"
+#include "movement.h"
+#include "disease.h"
 
 Simulation::Simulation(const Params& params)
+	: _width(params.get<float>("simulation.width", 500.0f))
+	, _height(params.get<float>("simulation.height", 500.0f))
 {
 	_isValid = _initPlugins(params) && _initAgents(params);
 }
@@ -34,8 +39,50 @@ Simulation::step()
 	}
 }
 
+float
+Simulation::getWidth() const
+{
+	return _width;
+}
+
+float
+Simulation::getHeight() const
+{
+	return _height;
+}
+
+const Collision*
+Simulation::getCollision() const
+{
+	return _collision;
+}
+
+const Movement*
+Simulation::getMovement() const
+{
+	return _movement;
+}
+
+const Disease*
+Simulation::getDisease() const
+{
+	return _disease;
+}
+
+const AgentsVec&
+Simulation::getAgents() const
+{
+	return _agents;
+}
+
 size_t
-Simulation::getNumHealthy()
+Simulation::getNumAgents() const
+{
+	return _agents.size();
+}
+
+size_t
+Simulation::getNumHealthy() const
 {
 	size_t num = 0;
 	for (auto& agent : _agents) {
@@ -48,7 +95,7 @@ Simulation::getNumHealthy()
 }
 
 size_t
-Simulation::getNumInfected()
+Simulation::getNumInfected() const
 {
 	size_t num = 0;
 	for (auto& agent : _agents) {
@@ -61,7 +108,7 @@ Simulation::getNumInfected()
 }
 
 size_t
-Simulation::getNumCured()
+Simulation::getNumCured() const
 {
 	size_t num = 0;
 	for (auto& agent : _agents) {
@@ -71,18 +118,6 @@ Simulation::getNumCured()
 	}
 
 	return num;
-}
-
-float
-Simulation::getWidth()
-{
-	return _movement->getWidth();
-}
-
-float
-Simulation::getHeight()
-{
-	return _movement->getHeight();
 }
 
 bool
@@ -107,6 +142,7 @@ Simulation::_initPlugins(const Params& params)
 	} else {
 		Log::info(" Movement Plugin: " + movKey);
 	}
+	_movement->setSimulation(this);
 
 	// Disease Plugin
 	std::string disKey = params.get<std::string>("disease", "SimpleDisease");
@@ -133,8 +169,8 @@ Simulation::_initAgents(const Params& params)
 
 	for (int i = 0; i < numAgents; ++i) {
 		Agent agent;
-		agent.x = Rand(_movement->getWidth());
-		agent.y = Rand(_movement->getHeight());
+		agent.x = Rand(_width);
+		agent.y = Rand(_height);
 
 		// Direction
 		float angle = Rand((float)-M_PI, (float)M_PI);

@@ -1,23 +1,22 @@
 #ifndef _MOVEMENT_H_
 #define _MOVEMENT_H_
 
+#include "simulation.h"
 #include "agent.h"
 
 class Movement
 {
 public:
 	
-	Movement(float width, float height);
+	Movement();
 	virtual ~Movement();
-
-	float getWidth();
-	float getHeight();
 
 	virtual void move(AgentsVec& agents) = 0;
 
+	void setSimulation(const Simulation* sim) { _simulation = sim; }
+
 protected:
-	float _width;
-	float _height;
+	const Simulation* _simulation = nullptr;
 };
 
 

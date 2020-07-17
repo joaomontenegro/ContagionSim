@@ -1,10 +1,7 @@
 #include "simpleMovement.h"
 #include "random.h"
 
-SimpleMovement::SimpleMovement(const Params& params)
-	: Movement(params.get<float>("movement.width", 400.0f),
-		       params.get<float>("movement.height", 300.0f))
-{}
+SimpleMovement::SimpleMovement(const Params& params) {}
 
 SimpleMovement::~SimpleMovement() {}
 
@@ -18,9 +15,9 @@ SimpleMovement::move(AgentsVec& agents)
 
 		// Bounce off the arena walls
 		if (agent.x < 0) { agent.dx *= -1; }
-		if (agent.x >= _width) { agent.dx *= -1; }
+		if (agent.x >= _simulation->getWidth()) { agent.dx *= -1; }
 		if (agent.y < 0) { agent.dy *= -1; }
-		if (agent.y >= _height) { agent.dy *= -1; }
+		if (agent.y >= _simulation->getHeight()) { agent.dy *= -1; }
 
 		// TODO
 		// Update velocity

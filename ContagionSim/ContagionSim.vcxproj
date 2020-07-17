@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="agent.h" />
     <ClInclude Include="collision.h" />
+    <ClInclude Include="contagion.h" />
     <ClInclude Include="factory.h" />
     <ClInclude Include="glviewer.h" />
     <ClInclude Include="disease.h" />
