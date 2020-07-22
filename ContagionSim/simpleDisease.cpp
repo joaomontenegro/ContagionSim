@@ -14,10 +14,10 @@ SimpleDisease::transmit(AgentsPairVec& agentPairs)
 		Agent& agentA = ap.first;
 		Agent& agentB = ap.second;
 
-		if (agentA.isInfected() != agentB.isInfected()) {
+		if (agentA.isInfected() || agentB.isInfected()) {
 			if (SampleProbability(_rate)) {
-				if (agentA.isHealthy()) { agentA.infectionAge = 0; }
-				if (agentB.isHealthy()) { agentB.infectionAge = 0; }
+				if (agentA.isSusceptible()) { agentA.infect(); }
+				if (agentB.isSusceptible()) { agentB.infect(); }
 			}
 		}
 	}
@@ -33,7 +33,7 @@ SimpleDisease::step()
 			agent.infectionAge++;
 
 			if (agent.infectionAge > 2000) {
-				agent.infectionAge = -2;
+				agent.cure();
 			}
 		}
 	}

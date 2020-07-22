@@ -22,12 +22,14 @@ void
 GridCollision::collide(AgentsPairVec& result)
 {
 	rebuildGrid();
+	std::vector<size_t> cellIndices;
+	cellIndices.reserve(9);
 
 	// Collision with other agents
 	for (auto& agent : _simulation->getAgents()) {
-		_cellIndices.clear();
-		getCellIndicesAround(agent, _cellIndices);
-		for (size_t cellIndex : _cellIndices) {
+		cellIndices.clear();
+		getAdjacentCells(agent, cellIndices);
+		for (size_t cellIndex : cellIndices) {
 			collideWithCell(agent, _grid[cellIndex], result);
 		}
 	}
@@ -46,7 +48,6 @@ GridCollision::initGrid()
 	_nCols = size_t(ceil(_simulation->getWidth() / _gridSize));
 	_nRows = size_t(ceil(_simulation->getHeight() / _gridSize));
 	_grid.resize(_nCols * _nRows);
-	_cellIndices.reserve(9);
 }
 
 void
@@ -62,23 +63,60 @@ GridCollision::rebuildGrid()
 	}
 	
 	for (auto& agent : _simulation->getAgents()) {
-		size_t cell = getCellIndex(agent);
+		size_t cell = getCell(agent);
 		_grid[cell].push_back(&agent);
 	}
 }
 
 size_t
-GridCollision::getCellIndex(const Agent& a)
+GridCollision::getCell(const Agent& a)
 {
-	int x = int(a.x / _nCols);
-	int y = int(a.y / _nRows);
+	size_t x = size_t(a.x / _nCols);
+	size_t y = size_t(a.y / _nRows);
+	return getCell(x, y);
+}
+
+size_t
+GridCollision::getCell(size_t x, size_t y)
+{
 	return y * _nCols + x;
 }
 
 void
-GridCollision::getCellIndicesAround(const Agent& a, std::vector<size_t>& indices)
+GridCollision::getAdjacentCells(const Agent& a, std::vector<size_t>& indices)
 {
-	indices.push_back(getCellIndex(a));
+	float width = _simulation->getWidth();
+	float height = _simulation->getHeight();
+
+	// Relative coordinates of the grid
+	size_t x = size_t(a.x / _nCols);
+	size_t y = size_t(a.y / _nRows);
+
+	// Absolute coordinates of the grid
+	float fx = _gridSize * x;
+	float fy = _gridSize * y;
+
+	// If the radius intercepts the cells around
+	bool prevX = (x > 0 && a.x - _radius < fx);
+	bool prevY = (y > 0 && a.y - _radius < fy);
+	bool nextX = (x < width  && a.x + _radius > fx + 1);
+	bool nextY = (y < height && a.y + _radius > fy + 1);
+
+	indices.push_back(getCell(x, y));
+
+	if (prevX) {
+		indices.push_back(getCell(x - 1, y));
+		if (prevY) { indices.push_back(getCell(x - 1, y - 1)); }
+		if (nextY) { indices.push_back(getCell(x - 1, y + 1)); }
+	}
+	else if (nextX) {
+		indices.push_back(getCell(x + 1, y));
+		if (prevY) { indices.push_back(getCell(x + 1, y - 1)); }
+		if (nextY) { indices.push_back(getCell(x + 1, y + 1)); }
+	}
+
+	if (prevY) { indices.push_back(getCell(x, y - 1)); }
+	if (nextY) { indices.push_back(getCell(x, y + 1)); }
 }
 
 void

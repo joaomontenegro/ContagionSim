@@ -22,17 +22,16 @@ private:
 	inline bool calcCollision(const Agent& a, const Agent& b);
 	void initGrid();
 	void rebuildGrid();
-	inline size_t getCellIndex(const Agent& a);
-	void getCellIndicesAround(const Agent& a, std::vector<size_t>& indices);
+	inline size_t getCell(const Agent& a);
+	inline size_t getCell(size_t x, size_t y);
+	void getAdjacentCells(const Agent& a, std::vector<size_t>& indices);
 	void collideWithCell(Agent& agent, const Cell& cell, AgentsPairVec& result);
 
 	float _gridSize;
-	size_t _nCols;
-	size_t _nRows;
+	size_t _nCols = 1;
+	size_t _nRows = 1;
 	
 	Grid _grid;
-	std::vector<size_t> _cellIndices;
-
 };
 
 namespace {

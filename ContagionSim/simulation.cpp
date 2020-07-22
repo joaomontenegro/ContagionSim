@@ -76,11 +76,11 @@ Simulation::getNumAgents() const
 }
 
 size_t
-Simulation::getNumHealthy() const
+Simulation::getNumSusceptible() const
 {
 	size_t num = 0;
 	for (auto& agent : _agents) {
-		if (agent.isHealthy()) {
+		if (agent.isSusceptible()) {
 			num++;
 		}
 	}
@@ -113,6 +113,9 @@ Simulation::getNumCured() const
 
 	return num;
 }
+
+
+
 
 bool
 Simulation::_initPlugins(const Params& params)
@@ -178,9 +181,11 @@ Simulation::_initAgents(const Params& params)
 
 		// Infected
 		if (i < params.get<int>("simulation.numInitialInfected", 1)) {
+			agent.state = Agent::State::Infected;
 			agent.infectionAge = 0;
 		}
 		else {
+			agent.state = Agent::State::Susceptible;
 			agent.infectionAge = -1;
 		}
 

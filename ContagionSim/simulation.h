@@ -31,7 +31,7 @@ public:
 
 	AgentsVec& getAgents();
 	size_t getNumAgents() const;
-	size_t getNumHealthy() const;
+	size_t getNumSusceptible() const;
 	size_t getNumInfected() const;
 	size_t getNumCured() const;
 

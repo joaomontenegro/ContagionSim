@@ -4,17 +4,27 @@
 #include <vector>
 
 struct Agent {
+
+	enum class State {Susceptible, Infected, Cured, Dead};
+
 	float x = 0;
 	float y = 0;
 
 	float dx = 0;
 	float dy = 0;
 
+	State state = State::Susceptible;
 	int infectionAge = -1;
 
-	bool isInfected() const { return infectionAge >= 0; }
-	bool isCured() const { return infectionAge == -2; }
-	bool isHealthy() const { return infectionAge == -1; }
+	// TODO:
+	bool isSusceptible() const { return state == State::Susceptible; }
+	bool isInfected() const { return state == State::Infected; }
+	bool isCured() const { return state == State::Cured; }
+	bool isDead() const { return state == State::Dead; }
+
+	void infect() { state = State::Infected; infectionAge = 0; }
+	void cure() { state = State::Cured; }
+	void kill() { state = State::Dead; }
 };
 
 typedef std::vector<Agent> AgentsVec;
