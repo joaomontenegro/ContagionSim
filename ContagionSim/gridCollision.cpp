@@ -27,6 +27,8 @@ GridCollision::collide(AgentsPairVec& result)
 
 	// Collision with other agents
 	for (auto& agent : _simulation->getAgents()) {
+		if (agent.isDead() || agent.isCured()) { continue; }
+		
 		cellIndices.clear();
 		getAdjacentCells(agent, cellIndices);
 		for (size_t cellIndex : cellIndices) {
@@ -125,6 +127,7 @@ GridCollision::collideWithCell(Agent& agent,
 						       AgentsPairVec& result)
 {
 	for (auto other : cell) {
+		if (other->isDead() || other->isCured()) { continue; }
 		if (calcCollision(agent, *other)) {
 			result.push_back(AgentsPair(agent, *other));
 		}

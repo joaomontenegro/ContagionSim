@@ -75,6 +75,9 @@
     <ClCompile Include="gridCollision.cpp">
       <Filter>Source Files\plugins\collisions</Filter>
     </ClCompile>
+    <ClCompile Include="hospitalDisease.cpp">
+      <Filter>Source Files\plugins\diseases</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="simulation.h">
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="gridCollision.h">
       <Filter>Header Files\plugins\collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="hospitalDisease.h">
+      <Filter>Header Files\plugins\diseases</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

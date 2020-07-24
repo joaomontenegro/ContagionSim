@@ -34,6 +34,7 @@ public:
 	size_t getNumSusceptible() const;
 	size_t getNumInfected() const;
 	size_t getNumCured() const;
+	size_t getNumDead() const;
 
 private:
 	bool _initPlugins(const Params& params);

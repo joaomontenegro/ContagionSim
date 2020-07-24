@@ -5,7 +5,14 @@
 
 struct Agent {
 
-	enum class State {Susceptible, Infected, Cured, Dead};
+	enum class State {
+		Susceptible,
+		Asymptomatic,
+		Symptomatic,
+		Hospitalized,
+		Dead,
+		Cured
+	};
 
 	float x = 0;
 	float y = 0;
@@ -14,17 +21,26 @@ struct Agent {
 	float dy = 0;
 
 	State state = State::Susceptible;
-	int infectionAge = -1;
+	int infectionAge = 0;
 
 	// TODO:
-	bool isSusceptible() const { return state == State::Susceptible; }
-	bool isInfected() const { return state == State::Infected; }
-	bool isCured() const { return state == State::Cured; }
-	bool isDead() const { return state == State::Dead; }
+	inline bool isSusceptible() const { return state == State::Susceptible; }
+	inline bool isCured() const { return state == State::Cured; }
+	inline bool isAsymptomatic() const { return state == State::Asymptomatic; }
+	inline bool isSymptomatic() const { return state == State::Symptomatic; }
+	inline bool isHospitalized() const { return state == State::Hospitalized; }
+	inline bool isDead() const { return state == State::Dead; }
 
-	void infect() { state = State::Infected; infectionAge = 0; }
-	void cure() { state = State::Cured; }
+	inline bool isInfected() const
+	{
+		return isAsymptomatic() || isSymptomatic() || isHospitalized();
+	}
+
+	void infect() { state = State::Asymptomatic; infectionAge = 0; }
+	void startSymptoms() { state = State::Symptomatic; }
+	void hospitalize() { state = State::Hospitalized; }
 	void kill() { state = State::Dead; }
+	void cure() { state = State::Cured; }
 };
 
 typedef std::vector<Agent> AgentsVec;

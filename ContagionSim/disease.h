@@ -14,10 +14,12 @@ public:
 
 	virtual void step() = 0;
 
-	void setSimulation(Simulation* sim) { _simulation = sim; }
+	void setSimulation(Simulation* sim) { _simulation = sim; init(); }
 
 protected:
-	float _rate;
+	virtual void init() = 0;
+
+	float _transmissionRate;
 
 	Simulation* _simulation = nullptr;
 };

@@ -1,11 +1,11 @@
 #include "disease.h"
 #include "random.h"
 
-Disease::Disease(float rate)
-	: _rate(rate)
+Disease::Disease(float transmissionRate)
+	: _transmissionRate(transmissionRate)
 {
-	if (_rate > 1.0f) {
-		_rate = 1.0f;
+	if (_transmissionRate > 1.0f) {
+		_transmissionRate = 1.0f;
 	}
 }
 

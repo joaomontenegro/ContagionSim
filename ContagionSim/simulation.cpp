@@ -12,7 +12,10 @@ Simulation::Simulation(const Params& params)
 	: _width(params.get<float>("simulation.width", 500.0f))
 	, _height(params.get<float>("simulation.height", 500.0f))
 {
-	_isValid = _initPlugins(params) && _initAgents(params);
+
+	// Agents need to be initialized before the plugins, since their
+	// initialization might need the agents info ready.
+	_isValid = _initAgents(params) && _initPlugins(params);
 }
 
 Simulation::~Simulation() {}
@@ -114,8 +117,18 @@ Simulation::getNumCured() const
 	return num;
 }
 
+size_t
+Simulation::getNumDead() const
+{
+	size_t num = 0;
+	for (auto& agent : _agents) {
+		if (agent.isDead()) {
+			num++;
+		}
+	}
 
-
+	return num;
+}
 
 bool
 Simulation::_initPlugins(const Params& params)
@@ -129,7 +142,6 @@ Simulation::_initPlugins(const Params& params)
 	} else {
 		Log::info("Collision Plugin: " + colKey);
 	}
-	_collision->setSimulation(this);
 	
 	// Movement Plugin
 	std::string movKey = params.get<std::string>("movement", "SimpleMovement");
@@ -140,7 +152,6 @@ Simulation::_initPlugins(const Params& params)
 	} else {
 		Log::info(" Movement Plugin: " + movKey);
 	}
-	_movement->setSimulation(this);
 
 	// Disease Plugin
 	std::string disKey = params.get<std::string>("disease", "SimpleDisease");
@@ -151,6 +162,10 @@ Simulation::_initPlugins(const Params& params)
 	} else {
 		Log::info("  Disease Plugin: " + disKey);
 	}
+
+	// Set the reference to this simulation in the plugins
+	_collision->setSimulation(this);
+	_movement->setSimulation(this);
 	_disease->setSimulation(this);
 
 	return true;
@@ -181,12 +196,7 @@ Simulation::_initAgents(const Params& params)
 
 		// Infected
 		if (i < params.get<int>("simulation.numInitialInfected", 1)) {
-			agent.state = Agent::State::Infected;
-			agent.infectionAge = 0;
-		}
-		else {
-			agent.state = Agent::State::Susceptible;
-			agent.infectionAge = -1;
+			agent.infect();
 		}
 
 		_agents.push_back(agent);

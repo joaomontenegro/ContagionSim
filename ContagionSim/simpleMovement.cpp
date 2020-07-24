@@ -9,6 +9,11 @@ void
 SimpleMovement::move()
 {
 	for (Agent& agent : _simulation->getAgents()) {
+
+		if (agent.isDead()) {
+			continue;
+		}
+
 		// Update position
 		agent.x += agent.dx;
 		agent.y += agent.dy;

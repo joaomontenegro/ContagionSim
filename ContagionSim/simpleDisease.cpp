@@ -2,7 +2,8 @@
 #include "random.h"
 
 SimpleDisease::SimpleDisease(const Params& params)
-	: Disease(params.get<float>("disease.rate", 0.1f))
+	: Disease(params.get<float>("disease.transmitionRate", 0.1f))
+	, _cureTime(params.get<int>("disease.cureTime", 1000))
 {}
 
 SimpleDisease::~SimpleDisease() {}
@@ -15,7 +16,7 @@ SimpleDisease::transmit(AgentsPairVec& agentPairs)
 		Agent& agentB = ap.second;
 
 		if (agentA.isInfected() || agentB.isInfected()) {
-			if (SampleProbability(_rate)) {
+			if (SampleProbability(_transmissionRate)) {
 				if (agentA.isSusceptible()) { agentA.infect(); }
 				if (agentB.isSusceptible()) { agentB.infect(); }
 			}
@@ -32,7 +33,7 @@ SimpleDisease::step()
 			// TODO: Take time step into account
 			agent.infectionAge++;
 
-			if (agent.infectionAge > 2000) {
+			if (agent.infectionAge > _cureTime) {
 				agent.cure();
 			}
 		}

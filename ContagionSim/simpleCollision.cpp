@@ -14,9 +14,12 @@ SimpleCollision::collide(AgentsPairVec& result)
 	// Collision with other agents
 	for (size_t i = 0; i < agents.size(); ++i) {
 		Agent& agent = agents[i];
+		if (agent.isDead() || agent.isCured()) { continue; }
 
 		for (size_t j = i + 1; j < agents.size(); ++j) {
 			Agent& other = agents[j];
+			if (agent.isDead() || agent.isCured()) { continue; }
+
 			if (calcCollision(agent, other)) {
 				result.push_back(AgentsPair(agent, other));
 			}

@@ -14,6 +14,13 @@ public:
 	void transmit(AgentsPairVec& agentPairs);
 
 	void step();
+
+protected:
+	virtual void init() {}
+
+private:
+	int _cureTime;
+
 };
 
 namespace {
