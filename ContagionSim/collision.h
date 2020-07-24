@@ -1,10 +1,10 @@
 #ifndef _COLLISION_H_
 #define _COLLISION_H_
 
-#include "simulation.h"
+#include "plugin.h"
 #include "agent.h"
 
-class Collision
+class Collision : public Plugin
 {
 public:
 	Collision(float radius);
@@ -12,15 +12,13 @@ public:
 
 	virtual void collide(AgentsPairVec& result) = 0;
 
-	void setSimulation(Simulation* sim) { _simulation = sim; }
-
 	float getRadius() const;
 
 protected:
+	virtual void init() {}
+
 	float _radius;
 	float _radius2;
-
-	Simulation* _simulation = nullptr;
 };
 
 

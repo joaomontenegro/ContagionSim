@@ -1,10 +1,10 @@
 #ifndef _DISEASE_H_
 #define _DISEASE_H_
 
-#include "simulation.h"
+#include "plugin.h"
 #include "agent.h"
 
-class Disease
+class Disease : public Plugin
 {
 public:
 	Disease(float transmissionRate, int numInitialInfected);
@@ -14,15 +14,11 @@ public:
 
 	virtual void step() = 0;
 
-	void setSimulation(Simulation* sim) { _simulation = sim; init(); }
-
 protected:
 	virtual void init();
 
 	float _transmissionRate;
 	size_t _numInitialInfected;
-
-	Simulation* _simulation = nullptr;
 };
 
 

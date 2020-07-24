@@ -1,10 +1,10 @@
 #ifndef _MOVEMENT_H_
 #define _MOVEMENT_H_
 
-#include "simulation.h"
+#include "plugin.h"
 #include "agent.h"
 
-class Movement
+class Movement : public Plugin
 {
 public:
 	
@@ -13,15 +13,11 @@ public:
 
 	virtual void move() = 0;
 
-	void setSimulation(Simulation* sim) { _simulation = sim; init(); }
-
 protected:
 	virtual void init();
 	
 	float _minSpeed;
 	float _maxSpeed;
-
-	Simulation* _simulation = nullptr;
 };
 
 

@@ -1,6 +1,8 @@
 #ifndef _PLUGIN_H_
 #define _PLUGIN_H_
 
+#include "simulation.h"
+
 class Plugin
 {
 public:
