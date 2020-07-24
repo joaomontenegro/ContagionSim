@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -98,11 +98,10 @@
     <PostBuildEvent>
       <Command>copy  $(ProjectDir)Params\*.params  $(OutDir)
 copy  $(ProjectDir)Glut\*.dll  $(OutDir)
-"C:\Program Files\7-Zip\7z.exe" a -bso0 -bsp0 -xr!*.zip -xr!*.ipdb -xr!*.pdb -xr!*.iobj $(OutDir)ContagionSim.zip $(OutDir)\*.* 
-echo Zipped $(OutDir)ContagionSim.zip</Command>
+Compress-Archive $(OutDir) $(OutDir)ContagionSim.zip</Command>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Message>Copy params and glut to output dir and zip</Message>
+      <Message>Copy params to output dir</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -141,11 +140,10 @@ echo Zipped $(OutDir)ContagionSim.zip</Command>
     <PostBuildEvent>
       <Command>copy  $(ProjectDir)Params\*.params  $(OutDir)
 copy  $(ProjectDir)Glut\*.dll  $(OutDir)
-"C:\Program Files\7-Zip\7z.exe" a -bso0 -bsp0 -xr!*.zip -xr!*.ipdb -xr!*.pdb -xr!*.iobj $(OutDir)ContagionSim.zip $(OutDir)\*.* 
-echo Zipped $(OutDir)ContagionSim.zip</Command>
+Compress-Archive $(OutDir) $(OutDir)ContagionSim.zip</Command>
     </PostBuildEvent>
     <PostBuildEvent>
-      <Message>Copy params and glut to output dir and zip</Message>
+      <Message>Copy params to output dir</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

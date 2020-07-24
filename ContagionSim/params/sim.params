@@ -8,12 +8,12 @@ float     collision.radius    5.0
 float     collision.gridSize  5.0
 
 # Movement params
-float     movement.minSpeed   0.1
-float     movement.maxSpeed   1.0
+float     movement.minSpeed   0.05
+float     movement.maxSpeed   0.1
 
 # Disease params
 int       disease.numInitialInfected  1
-float     disease.transmitionRate     0.1
+float     disease.transmitionRate     0.01
 float     disease.symptomaticRate     0.5
 int       disease.symptomaticTime     200
 float     disease.hospitalRate        0.5

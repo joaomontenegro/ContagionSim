@@ -40,8 +40,11 @@
     <Filter Include="Header Files\utils">
       <UniqueIdentifier>{d2810b18-3080-4265-af66-62ed313d7870}</UniqueIdentifier>
     </Filter>
-    <Filter Include="params">
+    <Filter Include="Resource Files\Params">
       <UniqueIdentifier>{795e34be-7105-4f01-9123-9981d1ceaf4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Glut">
+      <UniqueIdentifier>{93c02037-07fc-4b40-8453-c8d41a2ee8a2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +143,9 @@
     <ClInclude Include="log.h">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
+    <ClInclude Include="Glut\glut.h">
+      <Filter>Resource Files\Glut</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ContagionSim.rc">
@@ -147,11 +153,22 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="param1.bin">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="params\sim.params">
-      <Filter>params</Filter>
+      <Filter>Resource Files\Params</Filter>
     </None>
+    <None Include="Glut\glut.dll">
+      <Filter>Resource Files\Glut</Filter>
+    </None>
+    <None Include="Glut\glut32.dll">
+      <Filter>Resource Files\Glut</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Glut\glut.lib">
+      <Filter>Resource Files\Glut</Filter>
+    </Library>
+    <Library Include="Glut\glut32.lib">
+      <Filter>Resource Files\Glut</Filter>
+    </Library>
   </ItemGroup>
 </Project>
