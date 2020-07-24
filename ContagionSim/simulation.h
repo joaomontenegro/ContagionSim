@@ -30,6 +30,7 @@ public:
 	const Disease*   getDisease() const;
 
 	AgentsVec& getAgents();
+	Agent& getAgent(size_t index);
 	size_t getNumAgents() const;
 	size_t getNumSusceptible() const;
 	size_t getNumInfected() const;

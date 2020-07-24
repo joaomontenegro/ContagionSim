@@ -2,7 +2,8 @@
 #include "random.h"
 
 SimpleDisease::SimpleDisease(const Params& params)
-	: Disease(params.get<float>("disease.transmitionRate", 0.1f))
+	: Disease(params.get<float>("disease.transmitionRate", 0.1f),
+		      params.get<int>("disease.numInitialInfected", 1))
 	, _cureTime(params.get<int>("disease.cureTime", 1000))
 {}
 

@@ -74,7 +74,7 @@ void _display()
 			glEnd();
 
 			// Symptomatic - Orange
-			glColor3f(1.0, 0.5, 0.0);
+			glColor3f(1.0, 0.65, 0.0);
 			glBegin(GL_POINTS);
 			for (auto& agent : _sim->getAgents()) {
 				if (agent.isSymptomatic()) {
@@ -84,7 +84,7 @@ void _display()
 			glEnd();
 
 			// Hospitalized - Red
-			glColor3f(1.0, 0.0, 0.0);
+			glColor3f(0.8, 0.0, 0.0);
 			glBegin(GL_POINTS);
 			for (auto& agent : _sim->getAgents()) {
 				if (agent.isHospitalized()) {
@@ -116,8 +116,6 @@ void _display()
 
 		glEnd();
 		glFlush();
-
-		//std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 }
 

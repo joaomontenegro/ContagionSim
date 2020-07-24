@@ -5,14 +5,15 @@
 #include <iostream>
 
 HospitalDisease::HospitalDisease(const Params& params)
-	: Disease         (params.get<float>("disease.transmitionRate",  0.1f))
-	, _cureTime       (params.get<int>  ("disease.cureTime",         1000))
+	: Disease(params.get<float>("disease.transmitionRate",  0.1f),
+		      params.get<int>("disease.numInitialInfected", 1))
+	, _cureTime        (params.get<int>  ("disease.cureTime", 1000))
 	, _symptomaticRate (params.get<float>("disease.symptomaticRate", 0.1f))
 	, _symptomaticTime (params.get<int>  ("disease.symptomaticTime", 100))
-	, _hospitalRate    (params.get<float>("disease.hospitalRate",    0.1f))
-	, _hospitalTime	  (params.get<int>  ("disease.hospitalTime",     100))
-	, _deathRate	      (params.get<float>("disease.deathRate",    0.1f))
-	, _deathTime		  (params.get<int>  ("disease.deathTime",    100))
+	, _hospitalRate    (params.get<float>("disease.hospitalRate", 0.1f))
+	, _hospitalTime    (params.get<int>  ("disease.hospitalTime", 100))
+	, _deathRate	   (params.get<float>("disease.deathRate", 0.1f))
+	, _deathTime	   (params.get<int>  ("disease.deathTime", 100))
 {}
 
 HospitalDisease::~HospitalDisease() {}
@@ -55,11 +56,11 @@ HospitalDisease::step()
 			if (category == Category::Dead && age > _deathTime) {
 				agent.kill();
 				continue;
-			}/* else if (category == Category::Hospitalized && age > _hospitalTime) {
+			} else if (category == Category::Hospitalized && age > _hospitalTime) {
 				agent.hospitalize();
 			} else if (category == Category::Symptomatic && age > _symptomaticTime) {
 				agent.startSymptoms();
-			}*/
+			}
 			
 			// Cure the agents that have been sick longer than the cure time
 			if (category != Category::Dead && age > _cureTime) {
@@ -72,6 +73,8 @@ HospitalDisease::step()
 void
 HospitalDisease::init()
 {
+	Disease::init();
+
 	size_t numAgents = _simulation->getNumAgents();
 	_categories.reserve(numAgents);
 

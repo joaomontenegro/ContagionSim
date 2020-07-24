@@ -21,26 +21,28 @@ int main(int argc, char** argv) {
 
 	//TODO: divide params into groups instead of these points?
 	Params params;
+	//params.set<std::string>("collision", "SimpleCollision");
 	params.set<std::string>("collision", "GridCollision");
+	
 	params.set<std::string>("movement",  "SimpleMovement");
-	params.set<std::string>("disease",   "HospitalDisease");
+	
 	//params.set<std::string>("disease", "SimpleDisease");
+	params.set<std::string>("disease",   "HospitalDisease");
+	
 	params.set<float>("collision.radius", 5.0f);
-	params.set<float>("collision.gridSize", 20.0f);
-	params.set<float>("disease.transmitionRate", 0.01f);
-
-	// Percent of infected that present symptoms
+	params.set<float>("collision.gridSize", 5.0f);
+	
+	params.set<float>("movement.minSpeed", 0.1f);
+	params.set<float>("movement.maxSpeed", 1.0f);	
+	
+	params.set<int>("disease.numInitialInfected", 1);
+	params.set<float>("disease.transmitionRate", 0.1f);
 	params.set<float>("disease.symptomaticRate", 0.5f);
 	params.set<int>("disease.symptomaticTime", 200);
-	
-	// percent of symptomatic that end up in hospital
 	params.set<float>("disease.hospitalRate", 0.5f);
 	params.set<int>("disease.hospitalTime", 500);
-	
-	// percent of hospitalized who die
 	params.set<float>("disease.deathRate", 0.5f); 
 	params.set<int>("disease.deathTime", 1500);
-
 	params.set<int>("disease.cureTime", 2000);
 
 	// TODO hospital capacity
@@ -48,11 +50,8 @@ int main(int argc, char** argv) {
 	// TODO add jitter to times
 
 	params.set<int>("simulation.numAgents", 500);
-	params.set<int>("simulation.numInitialInfected", 1);
 	params.set<float>("simulation.width", 800.0f);
 	params.set<float>("simulation.height", 600.0f);
-	params.set<float>("agent.minSpeed", 0.1f); //TODO: should these be in movement?
-	params.set<float>("agent.maxSpeed", 1.0f); //TODO: should these be in movement?
 
 	// Simulation
 	Simulation sim(params);

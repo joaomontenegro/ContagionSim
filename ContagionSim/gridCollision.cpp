@@ -65,23 +65,25 @@ GridCollision::rebuildGrid()
 	}
 	
 	for (auto& agent : _simulation->getAgents()) {
-		size_t cell = getCell(agent);
-		_grid[cell].push_back(&agent);
+		if (agent.isSusceptible() || agent.isInfected()) {
+			size_t cell = getCell(agent);
+			_grid[cell].push_back(&agent);
+		}		
 	}
 }
 
 size_t
 GridCollision::getCell(const Agent& a)
 {
-	size_t x = size_t(a.x / _nCols);
-	size_t y = size_t(a.y / _nRows);
+	size_t x = size_t(a.x / _gridSize);
+	size_t y = size_t(a.y / _gridSize);
 	return getCell(x, y);
 }
 
 size_t
 GridCollision::getCell(size_t x, size_t y)
 {
-	return y * _nCols + x;
+	return y * _nRows + x;
 }
 
 void
@@ -91,8 +93,8 @@ GridCollision::getAdjacentCells(const Agent& a, std::vector<size_t>& indices)
 	float height = _simulation->getHeight();
 
 	// Relative coordinates of the grid
-	size_t x = size_t(a.x / _nCols);
-	size_t y = size_t(a.y / _nRows);
+	size_t x = size_t(a.x / _gridSize);
+	size_t y = size_t(a.y / _gridSize);
 
 	// Absolute coordinates of the grid
 	float fx = _gridSize * x;

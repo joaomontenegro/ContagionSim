@@ -1,8 +1,5 @@
-#define _USE_MATH_DEFINES
-
 #include "simulation.h"
 #include "factory.h"
-#include "random.h"
 #include "log.h"
 #include "collision.h"
 #include "movement.h"
@@ -76,6 +73,12 @@ size_t
 Simulation::getNumAgents() const
 {
 	return _agents.size();
+}
+
+Agent&
+Simulation::getAgent(size_t index)
+{
+	return _agents[index];
 }
 
 size_t
@@ -181,27 +184,8 @@ Simulation::_initAgents(const Params& params)
 		return false;
 	}
 
-	for (int i = 0; i < numAgents; ++i) {
-		Agent agent;
-		agent.x = Rand(_width);
-		agent.y = Rand(_height);
 
-		// Direction
-		float angle = Rand((float)-M_PI, (float)M_PI);
-		float minSpeed = params.get<float>("agent.minSpeed", 0.1f);
-		float maxSpeed = params.get<float>("agent.maxSpeed", 1.0f);
-		float speed = Rand(minSpeed, maxSpeed);
-		agent.dx = speed * cos(angle);
-		agent.dy = speed * sin(angle);
-
-		// Infected
-		if (i < params.get<int>("simulation.numInitialInfected", 1)) {
-			agent.infect();
-		}
-
-		_agents.push_back(agent);
-	}
-
+	_agents.assign(numAgents, Agent());
 	_collidedAgents.reserve(numAgents);
 
 	return true;

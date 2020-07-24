@@ -131,6 +131,9 @@
     <ClInclude Include="hospitalDisease.h">
       <Filter>Header Files\plugins\diseases</Filter>
     </ClInclude>
+    <ClInclude Include="plugin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ContagionSim.rc">

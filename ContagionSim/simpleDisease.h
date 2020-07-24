@@ -15,9 +15,6 @@ public:
 
 	void step();
 
-protected:
-	virtual void init() {}
-
 private:
 	int _cureTime;
 

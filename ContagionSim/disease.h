@@ -7,7 +7,7 @@
 class Disease
 {
 public:
-	Disease(float rate);
+	Disease(float transmissionRate, int numInitialInfected);
 	~Disease();
 
 	virtual void transmit(AgentsPairVec& agentPairs) = 0;
@@ -17,9 +17,10 @@ public:
 	void setSimulation(Simulation* sim) { _simulation = sim; init(); }
 
 protected:
-	virtual void init() = 0;
+	virtual void init();
 
 	float _transmissionRate;
+	size_t _numInitialInfected;
 
 	Simulation* _simulation = nullptr;
 };

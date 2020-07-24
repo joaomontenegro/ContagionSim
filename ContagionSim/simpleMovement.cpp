@@ -1,7 +1,10 @@
 #include "simpleMovement.h"
 #include "random.h"
 
-SimpleMovement::SimpleMovement(const Params& params) {}
+SimpleMovement::SimpleMovement(const Params& params) 
+	: Movement(params.get<float>("movement.minSpeed", 0.1f),
+		       params.get<float>("movement.maxSpeed", 1.0f))
+{}
 
 SimpleMovement::~SimpleMovement() {}
 
