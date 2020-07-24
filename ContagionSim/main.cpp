@@ -19,37 +19,39 @@ int main(int argc, char** argv) {
 
 	Log::setLogLevel(Log::LogLevel::Info);
 
-	//TODO: divide params into groups instead of these points?
 	Params params;
+
+	// Plugin params
 	//params.set<std::string>("collision", "SimpleCollision");
 	params.set<std::string>("collision", "GridCollision");
-	
 	params.set<std::string>("movement",  "SimpleMovement");
-	
 	//params.set<std::string>("disease", "SimpleDisease");
 	params.set<std::string>("disease",   "HospitalDisease");
 	
+	// Collision params
 	params.set<float>("collision.radius", 5.0f);
 	params.set<float>("collision.gridSize", 5.0f);
 	
+	// Movement params
 	params.set<float>("movement.minSpeed", 0.1f);
 	params.set<float>("movement.maxSpeed", 1.0f);	
 	
-	params.set<int>("disease.numInitialInfected", 1);
+	// Disease params
+	params.set<int>  ("disease.numInitialInfected", 1);
 	params.set<float>("disease.transmitionRate", 0.1f);
 	params.set<float>("disease.symptomaticRate", 0.5f);
-	params.set<int>("disease.symptomaticTime", 200);
+	params.set<int>  ("disease.symptomaticTime", 200);
 	params.set<float>("disease.hospitalRate", 0.5f);
-	params.set<int>("disease.hospitalTime", 500);
+	params.set<int>  ("disease.hospitalTime", 500);
 	params.set<float>("disease.deathRate", 0.5f); 
-	params.set<int>("disease.deathTime", 1500);
-	params.set<int>("disease.cureTime", 2000);
-
+	params.set<int>  ("disease.deathTime", 1500);
+	params.set<int>  ("disease.cureTime", 2000);
 	// TODO hospital capacity
 	// TODO death rate and times of non hospitalized
 	// TODO add jitter to times
 
-	params.set<int>("simulation.numAgents", 500);
+	// Simulation params
+	params.set<int>  ("simulation.numAgents", 500);
 	params.set<float>("simulation.width", 800.0f);
 	params.set<float>("simulation.height", 600.0f);
 

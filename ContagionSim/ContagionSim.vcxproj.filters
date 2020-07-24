@@ -132,7 +132,7 @@
       <Filter>Header Files\plugins\diseases</Filter>
     </ClInclude>
     <ClInclude Include="plugin.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\factory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
