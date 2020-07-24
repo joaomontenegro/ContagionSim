@@ -31,14 +31,17 @@
     <Filter Include="Source Files\plugins\collisions">
       <UniqueIdentifier>{bc0b4d7e-a461-47b1-8325-b6ad573132f7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\factory">
-      <UniqueIdentifier>{d2810b18-3080-4265-af66-62ed313d7870}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\plugins\diseases">
       <UniqueIdentifier>{d65d4c52-9d14-460e-93ef-fc05feb4ceed}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\plugins\diseases">
       <UniqueIdentifier>{a800eca6-e615-48a4-b7d7-09ea361957a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\utils">
+      <UniqueIdentifier>{d2810b18-3080-4265-af66-62ed313d7870}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="params">
+      <UniqueIdentifier>{795e34be-7105-4f01-9123-9981d1ceaf4e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -108,19 +111,16 @@
       <Filter>Header Files\plugins</Filter>
     </ClInclude>
     <ClInclude Include="factory.h">
-      <Filter>Header Files\factory</Filter>
+      <Filter>Header Files\utils</Filter>
     </ClInclude>
     <ClInclude Include="param.h">
-      <Filter>Header Files\factory</Filter>
+      <Filter>Header Files\utils</Filter>
     </ClInclude>
     <ClInclude Include="disease.h">
       <Filter>Header Files\plugins</Filter>
     </ClInclude>
     <ClInclude Include="simpleDisease.h">
       <Filter>Header Files\plugins\diseases</Filter>
-    </ClInclude>
-    <ClInclude Include="log.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="contagion.h">
       <Filter>Header Files</Filter>
@@ -132,12 +132,26 @@
       <Filter>Header Files\plugins\diseases</Filter>
     </ClInclude>
     <ClInclude Include="plugin.h">
-      <Filter>Header Files\factory</Filter>
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="paramFile.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="log.h">
+      <Filter>Header Files\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ContagionSim.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="param1.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="params\sim.params">
+      <Filter>params</Filter>
+    </None>
   </ItemGroup>
 </Project>
