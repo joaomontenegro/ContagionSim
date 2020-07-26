@@ -17,9 +17,13 @@ SimpleMovement::move()
 			continue;
 		}
 
+		// Get the velocity
+		float dx = agent.dx;
+		float dy = agent.dy;
+
 		// Update position
-		agent.x += agent.dx;
-		agent.y += agent.dy;
+		agent.x += dx;
+		agent.y += dy;
 
 		// Bounce off the arena walls
 		if (agent.x < 0) { agent.dx *= -1; }

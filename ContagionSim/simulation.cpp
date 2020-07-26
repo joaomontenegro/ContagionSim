@@ -95,6 +95,45 @@ Simulation::getNumSusceptible() const
 }
 
 size_t
+Simulation::getNumAsymptomatic() const
+{
+	size_t num = 0;
+	for (auto& agent : _agents) {
+		if (agent.isAsymptomatic()) {
+			num++;
+		}
+	}
+
+	return num;
+}
+
+size_t
+Simulation::getNumSymptomatic() const
+{
+	size_t num = 0;
+	for (auto& agent : _agents) {
+		if (agent.isSymptomatic()) {
+			num++;
+		}
+	}
+
+	return num;
+}
+
+size_t
+Simulation::getNumHospitalized() const
+{
+	size_t num = 0;
+	for (auto& agent : _agents) {
+		if (agent.isHospitalized()) {
+			num++;
+		}
+	}
+
+	return num;
+}
+
+size_t
 Simulation::getNumInfected() const
 {
 	size_t num = 0;

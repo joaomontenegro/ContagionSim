@@ -33,6 +33,9 @@ public:
 	Agent& getAgent(size_t index);
 	size_t getNumAgents() const;
 	size_t getNumSusceptible() const;
+	size_t getNumAsymptomatic() const;
+	size_t getNumSymptomatic() const;
+	size_t getNumHospitalized() const;
 	size_t getNumInfected() const;
 	size_t getNumCured() const;
 	size_t getNumDead() const;

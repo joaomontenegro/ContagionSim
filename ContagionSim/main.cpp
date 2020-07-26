@@ -19,7 +19,6 @@ int main(int argc, char** argv) {
 	srand((unsigned int)time(NULL));
 	Log::setLogLevel(Log::LogLevel::Info);
 
-
 	// Get the params file path from the command line args
 	std::string filepath;
 	
