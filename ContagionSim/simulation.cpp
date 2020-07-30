@@ -223,7 +223,6 @@ Simulation::_initAgents(const Params& params)
 		return false;
 	}
 
-
 	_agents.assign(numAgents, Agent());
 	_collidedAgents.reserve(numAgents);
 

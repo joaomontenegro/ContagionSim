@@ -22,6 +22,7 @@ struct Agent {
 
 	State state = State::Susceptible;
 	int infectionAge = 0;
+	bool canSpread = true;
 
 	// TODO:
 	inline bool isSusceptible() const { return state == State::Susceptible; }

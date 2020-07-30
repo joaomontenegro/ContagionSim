@@ -26,17 +26,17 @@ std::vector<Totals> _totals;
 
 void _displayArena()
 {
-	glClearColor(1.0, 1.0, 1.0, 1.0);
+	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glColor3f(1.0, 0.0, 0.0);
-	glPointSize(_sim->getCollision()->getRadius());
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluOrtho2D(0.0, _sim->getWidth() , 0.0, _sim->getHeight());
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	// Susceptible - Green
-	glColor3f(0.0, 0.75, 0.0);
+	// Susceptible - White
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glPointSize(3);
 	glBegin(GL_POINTS);
 	for (auto& agent : _sim->getAgents()) {
 		if (agent.isSusceptible()) {
@@ -48,6 +48,7 @@ void _displayArena()
 	if (renderInfected) {
 		// Infected - Red
 		glColor3f(1.0, 0.0, 0.0);
+		glPointSize(5);
 		glBegin(GL_POINTS);
 		for (auto& agent : _sim->getAgents()) {
 			if (agent.isInfected()) {
@@ -60,6 +61,7 @@ void _displayArena()
 
 		// Asymptomatic - Yellow
 		glColor3f(0.75, 0.75, 0.0);
+		glPointSize(5);
 		glBegin(GL_POINTS);
 		for (auto& agent : _sim->getAgents()) {
 			if (agent.isAsymptomatic()) {
@@ -70,6 +72,7 @@ void _displayArena()
 
 		// Symptomatic - Orange
 		glColor3f(1.0, 0.65, 0.0);
+		glPointSize(5);
 		glBegin(GL_POINTS);
 		for (auto& agent : _sim->getAgents()) {
 			if (agent.isSymptomatic()) {
@@ -80,6 +83,7 @@ void _displayArena()
 
 		// Hospitalized - Red
 		glColor3f(0.8, 0.0, 0.0);
+		glPointSize(5);
 		glBegin(GL_POINTS);
 		for (auto& agent : _sim->getAgents()) {
 			if (agent.isHospitalized()) {
@@ -91,7 +95,8 @@ void _displayArena()
 	}
 	
 	// Dead - Grey
-	glColor3f(0.0, 0.0, 0.0);
+	glColor3f(0.5, 0.5, 0.5);
+	glPointSize(5);
 	glBegin(GL_POINTS);
 	for (auto& agent : _sim->getAgents()) {
 		if (agent.isDead()) {
@@ -100,8 +105,9 @@ void _displayArena()
 	}
 	glEnd();
 
-	// Cured - Blue
-	glColor3f(0, 0.0, 0.85);
+	// Cured - Green
+	glColor3f(0.0, 0.5, 0.0);
+	glPointSize(3);
 	glBegin(GL_POINTS);
 	for (auto& agent : _sim->getAgents()) {
 		if (agent.isCured()) {
@@ -117,7 +123,7 @@ void _displayArena()
 
 void _displayChart()
 {
-	glClearColor(0.0, 0.5, 0.0, 1.0);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -126,8 +132,8 @@ void _displayChart()
 	float step = 1.0f / _totals.size();
 	float x = 0.0f;
 
-	// Asymptomatic
-	glColor3f(0.8, 0.8, 0.0);
+	// Dead
+	glColor3f(0.5f, 0.5f, 0.5f);
 	glBegin(GL_QUAD_STRIP);
 	glVertex2f(0.0f, 0.0f);
 	glVertex2f(0.0f, 0.0f);
@@ -140,14 +146,14 @@ void _displayChart()
 	}
 	glEnd();
 
-	// Symptomatic
-	glColor3f(1.0, 0.65, 0.0);
+	// Cured
+	glColor3f(0.0f, 0.5f, 0.0f);
 	glBegin(GL_QUAD_STRIP);
 	glVertex2f(0.0f, 0.0f);
 	glVertex2f(0.0f, 0.0f);
 	x = 0.0f;
 	for (auto& t : _totals) {
-		int value = t.numDead + t.numCured + t.numHospitalized + t.numSymptomatic;
+		int value = t.numCured + t.numHospitalized + t.numSymptomatic + t.numAsymptomatic;
 		glVertex2f(x, 0.0f);
 		glVertex2f(x, float(value) / _sim->getNumAgents());
 		x += step;
@@ -161,49 +167,49 @@ void _displayChart()
 	glVertex2f(0.0f, 0.0f);
 	x = 0.0f;
 	for (auto& t : _totals) {
-		int value = t.numDead + t.numCured + t.numHospitalized;
+		int value = t.numHospitalized + t.numSymptomatic + t.numAsymptomatic;
 		glVertex2f(x, 0.0f);
 		glVertex2f(x, float(value) / _sim->getNumAgents());
 		x += step;
 	}
 	glEnd();
 
-	// Cured
-	glColor3f(0.0f, 0.0f, 0.85f);
+	// Symptomatic
+	glColor3f(1.0, 0.65, 0.0);
 	glBegin(GL_QUAD_STRIP);
 	glVertex2f(0.0f, 0.0f);
 	glVertex2f(0.0f, 0.0f);
 	x = 0.0f;
 	for (auto& t : _totals) {
-		int value = t.numDead + t.numCured;
+		int value = t.numSymptomatic + t.numAsymptomatic;
 		glVertex2f(x, 0.0f);
 		glVertex2f(x, float(value) / _sim->getNumAgents());
 		x += step;
 	}
 	glEnd();
 
-
-	// Dead
-	glColor3f(0.0f, 0.0f, 0.0f);
+	// Asymptomatic
+	glColor3f(0.8, 0.8, 0.0);
 	glBegin(GL_QUAD_STRIP);
 	glVertex2f(0.0f, 0.0f);
 	glVertex2f(0.0f, 0.0f);
 	x = 0.0f;
 	for (auto& t : _totals) {
-		int value = t.numDead;
+		int value = t.numAsymptomatic;
 		glVertex2f(x, 0.0f);
 		glVertex2f(x, float(value) / _sim->getNumAgents());
 		x += step;
 	}
 	glEnd();
 
+	
 	glFlush();
 	glutSwapBuffers();
 
 }
 
 
-void _timer(int value)
+void _arenaTimer(int value)
 {
 	// Execute one simulation step
 	step++;
@@ -211,17 +217,6 @@ void _timer(int value)
 	_sim->step();
 	auto endTime = std::chrono::system_clock::now();
 	std::chrono::duration<double> elapsedTime = endTime - startTime;
-
-	Totals newTotals = {
-		_sim->getNumSusceptible(),
-		_sim->getNumAsymptomatic(),
-		_sim->getNumSymptomatic(),
-		_sim->getNumHospitalized(),
-		_sim->getNumCured(),
-		_sim->getNumDead()
-	};
-
-	_totals.push_back(newTotals);
 
 	// Print values
 	std::cout << std::setprecision(5) << "\r"
@@ -233,22 +228,48 @@ void _timer(int value)
 		<< "Dead: " << _sim->getNumDead()
 		<< "            " << std::flush;
 
-
-	// Draw Windows
+	// Draw Window
 	glutSetWindow(_arenaWindowId);
 	glutPostRedisplay();
+
+	// Reset the timer
+	if (_sim->getNumInfected() > 0) {
+		glutTimerFunc(1, _arenaTimer, 0);
+	}
+}
+
+void _chartTimer(int value)
+{
+	Totals newTotals = {
+		_sim->getNumSusceptible(),
+		_sim->getNumAsymptomatic(),
+		_sim->getNumSymptomatic(),
+		_sim->getNumHospitalized(),
+		_sim->getNumCured(),
+		_sim->getNumDead()
+	};
+
+	_totals.push_back(newTotals);
+
 	glutSetWindow(_chartWindowId);
 	glutPostRedisplay();
 
 	// Reset the timer
-	glutTimerFunc(1, _timer, 0);
+	if (_sim->getNumInfected() > 0) {
+		glutTimerFunc(50, _chartTimer, 0);
+	}
 }
 
 void _initArenaWindow(Simulation* sim)
 {
+	float aspectRatio = _sim->getWidth() / _sim->getHeight();
+
+	int width = 1000;
+	int height = int(1000.0f / aspectRatio);
+
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-	glutInitWindowSize(int(_sim->getWidth()), int(_sim->getHeight()));
-	glutInitWindowPosition(200, 200);
+	glutInitWindowSize(width, height);
+	glutInitWindowPosition(100, 100);
 	_arenaWindowId = glutCreateWindow("Points");
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutDisplayFunc(_displayArena);
@@ -276,6 +297,7 @@ void InitGLViewer(int argc, char** argv, Simulation* sim)
 	_initArenaWindow(_sim);
 	_initChartWindow(_sim);
 
-	glutTimerFunc(0, _timer, 0);
+	glutTimerFunc(0, _arenaTimer, 0);
+	glutTimerFunc(0, _chartTimer, 0);
 	glutMainLoop();
 }

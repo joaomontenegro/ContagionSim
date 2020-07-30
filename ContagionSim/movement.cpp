@@ -20,7 +20,7 @@ Movement::init() {
 		agent.y = Rand(_simulation->getHeight());
 
 		// Direction
-		float angle = Rand((float)-M_PI, (float)M_PI);
+		float angle = Rand(float(-M_PI), float(M_PI));
 		float speed = Rand(_minSpeed, _maxSpeed);
 		agent.dx = speed * cos(angle);
 		agent.dy = speed * sin(angle);

@@ -13,6 +13,9 @@ public:
 	virtual ~SimpleMovement();
 
 	virtual void move();
+
+protected:
+	float _dirChangeAngle = 0.0f;
 };
 
 namespace {

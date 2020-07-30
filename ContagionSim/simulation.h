@@ -41,6 +41,8 @@ public:
 	size_t getNumDead() const;
 
 private:
+	bool _init();
+
 	bool _initPlugins(const Params& params);
 	bool _initAgents(const Params& params);
 	

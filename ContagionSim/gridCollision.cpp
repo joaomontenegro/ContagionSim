@@ -63,12 +63,12 @@ GridCollision::rebuildGrid()
 			cell.clear();
 		}
 	}
-	
+
 	for (auto& agent : _simulation->getAgents()) {
 		if (agent.isSusceptible() || agent.isInfected()) {
 			size_t cell = getCell(agent);
 			_grid[cell].push_back(&agent);
-		}		
+		}
 	}
 }
 
@@ -129,6 +129,8 @@ GridCollision::collideWithCell(Agent& agent,
 						       AgentsPairVec& result)
 {
 	for (auto other : cell) {
+		if (&agent >= other) { continue; }
+		if (!agent.canSpread && other->canSpread) { continue; }
 		if (other->isDead() || other->isCured()) { continue; }
 		if (calcCollision(agent, *other)) {
 			result.push_back(AgentsPair(agent, *other));
