@@ -3,6 +3,7 @@
 #include "movement.h"
 #include "simulation.h"
 #include "glviewer.h"
+#include "run.h"
 
 #include "param.h"
 #include "paramFile.h"
@@ -44,9 +45,16 @@ int main(int argc, char** argv) {
 		return -1;
 	} 
 
-	// Run simulation in the viewer
-	InitGLViewer(argc, argv, &sim);
-
+	// Run simulation in GL or Console
+	std::string executionType = params.get<std::string>("execution.type", "Console");
+	if (executionType == "Console") {
+		RunConsole(&sim);
+	}
+	else if (executionType == "GL")  {
+		RunGL(argc, argv, &sim);
+	} else {
+		Log::error("Invalid Execution Type: " + executionType);
+	}
 
 	return 0;
 }

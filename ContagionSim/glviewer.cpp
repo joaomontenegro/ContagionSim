@@ -139,7 +139,7 @@ void _displayChart()
 	glVertex2f(0.0f, 0.0f);
 	x = 0.0f;
 	for (auto& t : _totals) {
-		int value = t.numDead + t.numCured + t.numHospitalized + t.numSymptomatic + t.numAsymptomatic;
+		size_t value = t.numDead + t.numCured + t.numHospitalized + t.numSymptomatic + t.numAsymptomatic;
 		glVertex2f(x, 0.0f);
 		glVertex2f(x, float(value) / _sim->getNumAgents());
 		x += step;
@@ -153,7 +153,7 @@ void _displayChart()
 	glVertex2f(0.0f, 0.0f);
 	x = 0.0f;
 	for (auto& t : _totals) {
-		int value = t.numCured + t.numHospitalized + t.numSymptomatic + t.numAsymptomatic;
+		size_t value = t.numCured + t.numHospitalized + t.numSymptomatic + t.numAsymptomatic;
 		glVertex2f(x, 0.0f);
 		glVertex2f(x, float(value) / _sim->getNumAgents());
 		x += step;
@@ -167,7 +167,7 @@ void _displayChart()
 	glVertex2f(0.0f, 0.0f);
 	x = 0.0f;
 	for (auto& t : _totals) {
-		int value = t.numHospitalized + t.numSymptomatic + t.numAsymptomatic;
+		size_t value = t.numHospitalized + t.numSymptomatic + t.numAsymptomatic;
 		glVertex2f(x, 0.0f);
 		glVertex2f(x, float(value) / _sim->getNumAgents());
 		x += step;
@@ -181,7 +181,7 @@ void _displayChart()
 	glVertex2f(0.0f, 0.0f);
 	x = 0.0f;
 	for (auto& t : _totals) {
-		int value = t.numSymptomatic + t.numAsymptomatic;
+		size_t value = t.numSymptomatic + t.numAsymptomatic;
 		glVertex2f(x, 0.0f);
 		glVertex2f(x, float(value) / _sim->getNumAgents());
 		x += step;
@@ -195,7 +195,7 @@ void _displayChart()
 	glVertex2f(0.0f, 0.0f);
 	x = 0.0f;
 	for (auto& t : _totals) {
-		int value = t.numAsymptomatic;
+		size_t value = t.numAsymptomatic;
 		glVertex2f(x, 0.0f);
 		glVertex2f(x, float(value) / _sim->getNumAgents());
 		x += step;
@@ -220,7 +220,7 @@ void _arenaTimer(int value)
 
 	// Print values
 	std::cout << std::setprecision(5) << "\r"
-		<< "step: " << step << "   "
+		<< "Step: " << step << "   "
 		<< "fps: " << 1.0 / elapsedTime.count() << "   "
 		<< "Susceptible: " << _sim->getNumSusceptible() << "   "
 		<< "Infected: " << _sim->getNumInfected() << "   "
@@ -288,7 +288,7 @@ void _initChartWindow(Simulation* sim)
 }
 
 
-void InitGLViewer(int argc, char** argv, Simulation* sim)
+void RunGL(int argc, char** argv, Simulation* sim)
 {
 	_sim = sim;
 	

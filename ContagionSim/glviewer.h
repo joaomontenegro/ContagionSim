@@ -3,8 +3,8 @@
 
 #include "simulation.h"
 
-#include<GL/glut.h>
+#include <GL/glut.h>
 
-void InitGLViewer(int argc, char** argv, Simulation* sim);
+void RunGL(int argc, char** argv, Simulation* sim);
 
 #endif // _GL_VIEWER_H_

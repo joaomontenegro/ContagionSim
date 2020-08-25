@@ -87,11 +87,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Glut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;glu32.lib;glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\GLut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent />
     <PostBuildEvent />
@@ -111,11 +113,13 @@ echo Zipped $(OutDir)ContagionSim.zip</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;glu32.lib;glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\Glut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -127,6 +131,7 @@ echo Zipped $(OutDir)ContagionSim.zip</Command>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Glut\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,6 +140,7 @@ echo Zipped $(OutDir)ContagionSim.zip</Command>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalDependencies>opengl32.lib;glu32.lib;glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\Glut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent />
     <PostBuildEvent />
@@ -156,13 +162,15 @@ echo Zipped $(OutDir)ContagionSim.zip</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Glut\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;glut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\Glut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -174,6 +182,7 @@ echo Zipped $(OutDir)ContagionSim.zip</Command>
     <ClCompile Include="movement.cpp" />
     <ClCompile Include="glviewer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="run.cpp" />
     <ClCompile Include="simpleCollision.cpp" />
     <ClCompile Include="simpleDisease.cpp" />
     <ClCompile Include="simpleMovement.cpp" />
@@ -184,10 +193,10 @@ echo Zipped $(OutDir)ContagionSim.zip</Command>
     <ClInclude Include="collision.h" />
     <ClInclude Include="contagion.h" />
     <ClInclude Include="factory.h" />
-    <ClInclude Include="Glut\glut.h" />
     <ClInclude Include="glviewer.h" />
     <ClInclude Include="disease.h" />
     <ClInclude Include="gridCollision.h" />
+    <ClInclude Include="run.h" />
     <ClInclude Include="hospitalDisease.h" />
     <ClInclude Include="log.h" />
     <ClInclude Include="movement.h" />
@@ -205,13 +214,7 @@ echo Zipped $(OutDir)ContagionSim.zip</Command>
     <ResourceCompile Include="ContagionSim.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Glut\glut.dll" />
-    <None Include="Glut\glut32.dll" />
     <None Include="params\sim.params" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="Glut\glut.lib" />
-    <Library Include="Glut\glut32.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
