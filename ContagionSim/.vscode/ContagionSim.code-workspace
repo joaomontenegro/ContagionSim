@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"*.TMP": true,
+			"*.vcxproj*": true,
+			"**/*.aps": true,
+			"**/*.rc": true,
+			"**/*~": true,
+			"Debug": true,
+			"Release": true,
+			"x64": true
+		}
+	}
+}
