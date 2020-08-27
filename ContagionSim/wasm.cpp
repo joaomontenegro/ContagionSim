@@ -29,8 +29,8 @@ int main(int argc, char** argv) {
 	params.set<float>("collision.radius",   2.0f);
 	params.set<float>("collision.gridSize", 5.0f);
 	params.set<int>("simulation.numAgents", 1000);
-	params.set<int>("simulation.width",  800);
-	params.set<int>("simulation.height", 600);
+	params.set<float>("simulation.width",  800);
+	params.set<float>("simulation.height", 600);
 
 	// Simulation
 	Simulation sim(params);
