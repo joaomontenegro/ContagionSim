@@ -1,0 +1,9 @@
+open 13.59.146.48
+http
+Harvopart11!
+cd files
+cd contagion
+put contagion.html
+put contagion.js
+put contagion.wasm
+quit

@@ -4,8 +4,8 @@ string    movement   SimpleMovement
 string    disease    HospitalDisease  ### SimpleDisease 
 
 # Execution params
-string    execution.type GL
-#string    execution.type Console
+#string    execution.type GL
+string    execution.type Console
 
 # Simulation params
 int       simulation.numAgents  10000

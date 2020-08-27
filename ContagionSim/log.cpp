@@ -30,7 +30,7 @@ namespace Log
 	}
 
 	void
-		Log::warn(const std::string& msg)
+		warn(const std::string& msg)
 	{
 		if (_logLevel >= LogLevel::Warn) {
 			std::cerr << " * WARN: " << msg << std::endl;

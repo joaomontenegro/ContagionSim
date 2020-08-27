@@ -153,8 +153,22 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="params\sim.params">
+    <None Include="params\contagion.params">
       <Filter>Resource Files\Params</Filter>
     </None>
+    <None Include="wasm_build.bat">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="wasm.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="wasm_upload.bat">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ftp.cmds">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

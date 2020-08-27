@@ -20,41 +20,30 @@ int main(int argc, char** argv) {
 	srand((unsigned int)time(NULL));
 	Log::setLogLevel(Log::LogLevel::Info);
 
-	// Get the params file path from the command line args
-	std::string filepath;
-	
-	if (argc < 2) {
-		Log::info(std::string("Usage: ") + argv[0] + " [PARAMS FILE]");
-		
-		filepath = "contagion.params";
-	}
-	else {
-		filepath = argv[1];
-	}
-
+	// TODO implement reading file in wasm
 	// Read Params
 	Params params;
-	if (!ReadParam(filepath, &params)) {
-		return 1;
-	}
+	params.set<std::string>("collision", "GridCollision");
+	params.set<std::string>("movement",  "SimpleMovement");
+	params.set<std::string>("disease",   "HospitalDisease");
+	params.set<float>("collision.radius",   2.0f);
+	params.set<float>("collision.gridSize", 5.0f);
+	params.set<int>("simulation.numAgents", 1000);
+	params.set<int>("simulation.width",  800);
+	params.set<int>("simulation.height", 600);
 
 	// Simulation
 	Simulation sim(params);
 	if (!sim.isValid()) {
 		Log::error("Invalid Simulation - terminating...");
 		return -1;
-	} 
+	}
 
 	// Run simulation in GL or Console
-	std::string executionType = params.get<std::string>("execution.type", "Console");
-	if (executionType == "Console") {
-		RunConsole(&sim);
-	}
-	else if (executionType == "GL")  {
-		RunGL(argc, argv, &sim);
-	} else {
-		Log::error("Invalid Execution Type: " + executionType);
-	}
+	RunConsole(&sim);
+
+	Log::info("Done!");
 
 	return 0;
 }
+

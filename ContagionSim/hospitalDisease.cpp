@@ -1,6 +1,7 @@
 #include "hospitalDisease.h"
 #include "random.h"
 
+#include <random>
 #include <algorithm>
 #include <iostream>
 
@@ -102,5 +103,7 @@ HospitalDisease::init()
 	}
 
 	// Shuffle categories
-	std::random_shuffle(_categories.begin(), _categories.end());
+	std::random_device rd;
+	std::mt19937 g(rd());
+	std::shuffle(_categories.begin(), _categories.end(), g);
 }

@@ -1,13 +1,13 @@
 #include "run.h"
 
 void _PrintValues(Simulation* sim, size_t step) {
-	std::cout << std::setprecision(5) << "\r"
+	std::cout << std::setprecision(5)
 		<< "Step: " << step << "   "
 		<< "Susceptible: " << sim->getNumSusceptible() << "   "
 		<< "Infected: " << sim->getNumInfected() << "   "
 		<< "Cured: " << sim->getNumCured() << "   "
 		<< "Dead: " << sim->getNumDead()
-		<< "            " << std::flush;
+		<< std::endl << std::endl;
 }
 
 void RunConsole(Simulation* sim)
