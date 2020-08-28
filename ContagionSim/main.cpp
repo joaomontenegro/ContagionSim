@@ -46,15 +46,7 @@ int main(int argc, char** argv) {
 	} 
 
 	// Run simulation in GL or Console
-	std::string executionType = params.get<std::string>("execution.type", "Console");
-	if (executionType == "Console") {
-		RunConsole(&sim);
-	}
-	else if (executionType == "GL")  {
-		RunGL(argc, argv, &sim);
-	} else {
-		Log::error("Invalid Execution Type: " + executionType);
-	}
+	Run(&sim, params, true/*inWindow*/);
 
 	return 0;
 }

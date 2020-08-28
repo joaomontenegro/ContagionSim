@@ -12,7 +12,8 @@ simpleCollision.cpp ^
 simpleDisease.cpp ^
 simpleMovement.cpp ^
 simulation.cpp ^
-wasm.cpp
+wasmMain.cpp ^
+glViewer.cpp
 
 set OUTDIR=./wasm.out
 

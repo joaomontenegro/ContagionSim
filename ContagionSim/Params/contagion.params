@@ -8,7 +8,7 @@ string    disease    HospitalDisease  ### SimpleDisease
 string    execution.type Console
 
 # Simulation params
-int       simulation.numAgents  10000
+int       simulation.numAgents  1000
 float     simulation.width      800.0
 float     simulation.height     600.0
 

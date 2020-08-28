@@ -2,7 +2,6 @@
 #include "disease.h"
 #include "movement.h"
 #include "simulation.h"
-#include "glviewer.h"
 #include "run.h"
 
 #include "param.h"
@@ -20,7 +19,7 @@ int main(int argc, char** argv) {
 	srand((unsigned int)time(NULL));
 	Log::setLogLevel(Log::LogLevel::Info);
 
-	// TODO implement reading file in wasm
+	// TODO implement reading file in wasm?
 	// Read Params
 	Params params;
 	params.set<std::string>("collision", "GridCollision");
@@ -40,9 +39,7 @@ int main(int argc, char** argv) {
 	}
 
 	// Run simulation in GL or Console
-	RunConsole(&sim);
-
-	Log::info("Done!");
+	Run(&sim, params, false/*inWindow*/);
 
 	return 0;
 }
