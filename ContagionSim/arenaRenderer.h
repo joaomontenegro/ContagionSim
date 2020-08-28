@@ -6,11 +6,14 @@
 class ArenaRenderer : public GLRenderer
 {
 public:
-	ArenaRenderer(Simulation* sim) : GLRenderer(sim) {}
-	virtual ~ArenaRenderer() {}
+	ArenaRenderer(Simulation* sim);
+	virtual ~ArenaRenderer();
 
 public:
-	void render() override {/*TODO*/ }
+	void render() override;
+
+private:
+	bool _renderInfected = false; //todo
 };
 
 #endif

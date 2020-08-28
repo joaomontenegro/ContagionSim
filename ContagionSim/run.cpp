@@ -39,27 +39,26 @@ void RunGL(Simulation* sim, bool inWindow)
 	// TODO might have to go into the if statement below
 	// Create the renderers
 	ArenaRenderer arenaRenderer(sim);
-	ChartRenderer chartRenderer(sim);
+	//ChartRenderer chartRenderer(sim);
+
+	//TODO use a central cycle that renders all windows?
 
 	if (inWindow) {
+		// Window mode
 		Log::info("  Running in a Window.");
+		GLWindow arenaWindow("ContagionSim - Arena",
+			(int)sim->getWidth(),
+			(int)sim->getHeight(),
+			&arenaRenderer);
+		
+		arenaWindow.show();		
 
-		// Init window
 	} else {
 		// Init surface?
-		Log::info("  Running in a Window.");
-	}
-	
-	size_t step = 0;
-	for (; sim->getNumInfected() > 0; sim->step(), ++step) {
-		// TODO render less times? not on every step
-		arenaRenderer.render();
-		chartRenderer.render();
-	}
+		Log::info("Running in Console.");
 
-	// Draw one last time
-	arenaRenderer.render();
-	chartRenderer.render();
+		// TODO WASM 
+	}
 }
 
 void Run(Simulation* sim, const Params& params, bool inWindow)

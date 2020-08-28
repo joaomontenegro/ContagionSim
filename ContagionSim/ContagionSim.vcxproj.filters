@@ -46,6 +46,9 @@
     <Filter Include="Header Files\gl">
       <UniqueIdentifier>{f0ec3a6b-76f3-457b-9f66-c0f83f45bc7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\gl">
+      <UniqueIdentifier>{745f4370-bd18-44f8-a4b7-0542432a0273}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -86,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="run.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="window.cpp">
+      <Filter>Source Files\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="arenaRenderer.cpp">
+      <Filter>Source Files\gl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -174,7 +174,7 @@ echo Zipped $(OutDir)ContagionSim.zip</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="arenaRenderer.cpp" />
+    <ClCompile Include="ArenaRenderer.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="disease.cpp" />
     <ClCompile Include="gridCollision.cpp" />
