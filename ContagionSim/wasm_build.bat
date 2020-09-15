@@ -25,4 +25,4 @@ if "%EMSDK%"=="" call emsdk_env
 if not exist "%OUTDIR%" mkdir %OUTDIR%
 
 :: Build
-call emcc %FILES% -s WASM=1 -s USE_SDL=2 -s LEGACY_GL_EMULATION=1 -owasm.out/contagion.html
+call emcc %FILES% -s WASM=1 -s USE_SDL=2 -s LEGACY_GL_EMULATION=1 -s ERROR_ON_UNDEFINED_SYMBOLS=0 -owasm.out/contagion.html
