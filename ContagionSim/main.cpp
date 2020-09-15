@@ -46,7 +46,7 @@ int main(int argc, char** argv) {
 	} 
 
 	// Run simulation in GL or Console
-	Run(&sim, params, true/*inWindow*/);
+	Run(&sim, params);
 
 	return 0;
 }

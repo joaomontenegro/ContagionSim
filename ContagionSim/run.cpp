@@ -21,7 +21,7 @@ void _PrintSimulation(Simulation* sim, size_t step) {
 
 void RunConsole(Simulation* sim)
 {
-	Log::info("Running in Console mode.");
+	Log::info("Running in the Console");
 
 	size_t step = 0;
 	for (; sim->getNumInfected() > 0; sim->step(), ++step) {
@@ -32,43 +32,48 @@ void RunConsole(Simulation* sim)
 	_PrintSimulation(sim, step);
 }
 
-void RunGL(Simulation* sim, bool inWindow)
+void RunGL(Simulation* sim, int fps)
 {
 	Log::info("Running in GL mode.");
 
-	// TODO might have to go into the if statement below
 	// Create the renderers
 	ArenaRenderer arenaRenderer(sim);
 	//ChartRenderer chartRenderer(sim);
 
-	//TODO use a central cycle that renders all windows?
 
-	if (inWindow) {
-		// Window mode
-		Log::info("  Running in a Window.");
-		GLWindow arenaWindow("ContagionSim - Arena",
-			(int)sim->getWidth(),
-			(int)sim->getHeight(),
-			&arenaRenderer);
-		
-		arenaWindow.show();		
+	// Create the Window
+	GLWindow arenaWindow("ContagionSim - Arena",
+		(int)sim->getWidth(), (int)sim->getHeight(),
+		&arenaRenderer);
 
-	} else {
-		// Init surface?
-		Log::info("Running in Console.");
+	// Time variables
+	float frameTime = 1000.0f / fps;
+	Uint32 prevTicks = SDL_GetTicks();
 
-		// TODO WASM 
+	// Main loop
+	size_t step = 0;
+	for (; sim->getNumInfected() > 0; sim->step(), ++step) {
+		// Exit if the window is closed
+		if (!arenaWindow.processEvents()) { break; }
+
+		// Render on the right time to maintain the fps
+		Uint32 curTicks = SDL_GetTicks();
+		if (curTicks - prevTicks >= frameTime) {			
+			arenaWindow.draw();
+			prevTicks = curTicks;
+		}
 	}
 }
 
-void Run(Simulation* sim, const Params& params, bool inWindow)
+void Run(Simulation* sim, const Params& params)
 {
 	std::string executionType = params.get<std::string>("execution.type", "Console");
 	if (executionType == "Console") {
 		RunConsole(sim);
 	}
 	else if (executionType == "GL") {
-		RunGL(sim);
+		int fps = params.get<int>("execution.fps", 60);
+		RunGL(sim, fps);
 	}
 	else {
 		Log::error("Invalid Execution Type: " + executionType);

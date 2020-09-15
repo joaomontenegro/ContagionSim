@@ -1,6 +1,9 @@
 #include "window.h"
 #include "log.h"
 
+#include <chrono>
+#include <iostream>
+
 GLWindow::GLWindow(const std::string& title,
 				   int width, int height,
 				   GLRenderer* renderer)
@@ -9,14 +12,18 @@ GLWindow::GLWindow(const std::string& title,
 	, _renderer(renderer)
 {
 	// Create the Sdl Window
-	SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_OPENGL,
-							    &_sdlWindow, &_sdlRenderer);
+	_sdlWindow = SDL_CreateWindow(
+		title.c_str(),
+		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+		width, height,
+		SDL_WINDOW_OPENGL);
 	if (!_sdlWindow) {
 		Log::error("Failed to create window: " + title + " : " + SDL_GetError());
 		return;
 	}
 
 	// Create the Sdl Renderer
+	_sdlRenderer = SDL_CreateRenderer(_sdlWindow, -1, SDL_RENDERER_PRESENTVSYNC);
 	if (!_sdlRenderer) {
 		Log::error("Failed to create renderer for: " + title + " : " + SDL_GetError());
 		return;
@@ -31,6 +38,7 @@ GLWindow::GLWindow(const std::string& title,
 		return;
 	}
 
+	// Create the GL context
 	_glContext = new SDL_GLContext(SDL_GL_CreateContext(_sdlWindow));
 
 	// Set window title
@@ -53,15 +61,6 @@ bool GLWindow::isValid()
 	return _sdlWindow && _sdlRenderer && _renderer && _glContext;
 }
 
-void GLWindow::show()
-{
-	while (true)
-	{
-		if (!processEvents()) { break; }
-		draw();
-	}
-}
-
 bool GLWindow::processEvents()
 {
 	SDL_Event e;
@@ -78,19 +77,12 @@ bool GLWindow::processEvents()
 	return true;
 }
 
-#include <iostream>
-
-int counter = 0;
-
 void GLWindow::draw()
 {
 	SDL_GL_MakeCurrent(_sdlWindow, *_glContext);
 	_renderer->render();
-	
-	// TODO TOO SLOWWWWWW
+	glFlush();
 	SDL_GL_SwapWindow(_sdlWindow);
-
-	std::cout << counter++ << std::endl;
 }
 
 

@@ -9,9 +9,9 @@
 
 void RunConsole(Simulation* sim);
 
-void RunGL(Simulation* sim, bool inWindow=true);
+void RunGL(Simulation* sim);
 
-void Run(Simulation* sim, const Params& params, bool inWindow);
+void Run(Simulation* sim, const Params& params);
 
 #endif
 

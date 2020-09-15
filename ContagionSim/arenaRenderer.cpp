@@ -13,9 +13,6 @@ ArenaRenderer::~ArenaRenderer()
 
 void ArenaRenderer::render()
 {
-	// TODO: move this call to  a place in run.cpp in a central heartbeat cycle
-	_sim->step();
-
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -101,5 +98,4 @@ void ArenaRenderer::render()
 	}
 
 	glEnd();
-	glFlush();
 }

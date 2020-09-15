@@ -14,11 +14,8 @@ public:
 
 	bool isValid();
 
-	void show();
-
-protected:
 	virtual bool processEvents();
-	virtual void draw();
+	void draw();
 
 private:
 	void _initGL();
@@ -30,7 +27,6 @@ private:
 	SDL_Renderer*  _sdlRenderer = nullptr;
 	SDL_GLContext* _glContext   = nullptr;
 	GLRenderer*    _renderer    = nullptr;
-	
 };
 
 #endif
