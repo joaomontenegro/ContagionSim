@@ -39,7 +39,9 @@ int main(int argc, char** argv) {
 	}
 
 	// Run simulation in GL or Console
-	Run(&sim, params, false/*inWindow*/);
+	Run(&sim, params);
+
+	Log::info("Done.");
 
 	return 0;
 }

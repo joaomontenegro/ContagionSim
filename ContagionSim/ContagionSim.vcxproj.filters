@@ -57,9 +57,6 @@
     <ClCompile Include="simulation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="glviewer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="simpleMovement.cpp">
       <Filter>Source Files\plugins\movements</Filter>
     </ClCompile>

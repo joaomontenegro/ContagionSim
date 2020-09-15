@@ -1,6 +1,7 @@
 @echo off
 
 set FILES=^
+arenaRenderer.cpp ^
 collision.cpp ^
 disease.cpp ^
 gridCollision.cpp ^
@@ -13,7 +14,7 @@ simpleDisease.cpp ^
 simpleMovement.cpp ^
 simulation.cpp ^
 wasmMain.cpp ^
-glViewer.cpp
+window.cpp
 
 set OUTDIR=./wasm.out
 
@@ -24,4 +25,4 @@ if "%EMSDK%"=="" call emsdk_env
 if not exist "%OUTDIR%" mkdir %OUTDIR%
 
 :: Build
-call emcc %FILES% -s WASM=1 -owasm.out/contagion.html
+call emcc %FILES% -s WASM=1 -s USE_SDL=2 -s LEGACY_GL_EMULATION=1 -owasm.out/contagion.html

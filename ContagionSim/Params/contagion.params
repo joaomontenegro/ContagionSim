@@ -4,9 +4,9 @@ string    movement   SimpleMovement
 string    disease    HospitalDisease  ### SimpleDisease 
 
 # Execution params
+int       execution.fps 60
 string    execution.type GL
 #string    execution.type Console
-int     execution.fps 60
 
 # Simulation params
 int       simulation.numAgents  10000
