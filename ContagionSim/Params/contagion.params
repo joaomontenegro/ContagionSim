@@ -2,26 +2,26 @@
 string    collision  GridCollision ### SimpleCollision
 string    movement   SimpleMovement 
 string    disease    HospitalDisease  ### SimpleDisease 
-
+#
 # Execution params
 int       execution.fps 60
 string    execution.type GL
 #string    execution.type Console
-
+#
 # Simulation params
-int       simulation.numAgents  10000
-float     simulation.width      800.0
-float     simulation.height     600.0
-
+int       simulation.numAgents  1000
+float     simulation.width      400.0
+float     simulation.height     300.0
+#
 # Collision params
 float     collision.radius    2.0
 float     collision.gridSize  5.0
-
+#
 # Movement params
 float     movement.minSpeed        0.1
 float     movement.maxSpeed        0.2
 float     movement.dirChangeAngle  10.0
-
+#
 # Disease params
 float     disease.transmitionRate     0.5
 float     disease.symptomaticRate     0.5

@@ -5,7 +5,7 @@
 
 namespace Log
 {
-	enum class LogLevel { Print = 0, Error, Warn, Info, Debug };
+	enum class LogLevel { None = 0, Print, Error, Warn, Info, Debug };
 
 	void setLogLevel(LogLevel level);
 	void debug(const std::string& msg);

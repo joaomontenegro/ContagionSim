@@ -6,4 +6,5 @@ cd contagion
 put contagion.html
 put contagion.js
 put contagion.wasm
+put contagion.data
 quit

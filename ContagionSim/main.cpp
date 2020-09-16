@@ -2,7 +2,6 @@
 #include "disease.h"
 #include "movement.h"
 #include "simulation.h"
-#include "glviewer.h"
 #include "run.h"
 
 #include "param.h"
@@ -14,7 +13,7 @@
 #include <ctime>
 
 #include <memory>
-#include <iostream>
+
 
 int main(int argc, char** argv) {
 	srand((unsigned int)time(NULL));
@@ -45,8 +44,26 @@ int main(int argc, char** argv) {
 		return -1;
 	} 
 
-	// Run simulation in GL or Console
-	Run(&sim, params);
+	// Get the execution mode
+	Run* run = nullptr;
+	std::string executionType = params.get<std::string>("execution.type", "Console");
+	if (executionType == "Console") {
+		Log::info("Console Mode");		
+		run = new ConsoleRun(&sim);
+	}
+	else if (executionType == "GL") {
+		Log::info("GL Window Mode");
+		int fps = params.get<int>("execution.fps", 60);
+		run = new GLWindowRun(&sim, fps);
+	}
+
+	// Main Loop
+	while (!run->hasEnded()) {
+		sim.step();
+		run->output();
+	}
+
+	delete run;
 
 	return 0;
 }

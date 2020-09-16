@@ -31,6 +31,14 @@ Simulation::step()
 	// the disease in the agents.
 	_disease->transmit(_collidedAgents);
     _disease->step();
+
+	_stepCount++;
+}
+
+size_t
+Simulation::getStepCount()
+{
+	return _stepCount;
 }
 
 float

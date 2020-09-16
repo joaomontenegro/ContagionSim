@@ -83,6 +83,11 @@ void GLWindow::draw()
 	_renderer->render();
 	glFlush();
 	SDL_GL_SwapWindow(_sdlWindow);
+	_prevDrawTime = SDL_GetTicks();
+}
+
+size_t GLWindow::getTimeSinceLastDraw() {
+	return SDL_GetTicks() - _prevDrawTime;
 }
 
 

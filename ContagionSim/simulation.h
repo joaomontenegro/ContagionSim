@@ -20,6 +20,8 @@ public:
 	
 	void step();
 
+	size_t getStepCount();
+
 public:
 	//** Getters **//
 	float getWidth() const;
@@ -48,6 +50,8 @@ private:
 	
 private:
 	bool _isValid = false;
+	
+	size_t _stepCount = 0;
 
 	float _width;
 	float _height;

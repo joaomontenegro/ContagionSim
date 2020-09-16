@@ -16,6 +16,7 @@ public:
 
 	virtual bool processEvents();
 	void draw();
+	size_t  getTimeSinceLastDraw();
 
 private:
 	void _initGL();
@@ -23,10 +24,11 @@ private:
 	int _width;
 	int _height;
 
-	SDL_Window*    _sdlWindow   = nullptr;
-	SDL_Renderer*  _sdlRenderer = nullptr;
-	SDL_GLContext* _glContext   = nullptr;
-	GLRenderer*    _renderer    = nullptr;
+	SDL_Window*    _sdlWindow    = nullptr;
+	SDL_Renderer*  _sdlRenderer  = nullptr;
+	SDL_GLContext* _glContext    = nullptr;
+	GLRenderer*    _renderer     = nullptr;
+	Uint32         _prevDrawTime = 0;
 };
 
 #endif
