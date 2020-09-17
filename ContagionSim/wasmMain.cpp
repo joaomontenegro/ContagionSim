@@ -85,6 +85,3 @@ void mainLoop(void* args)
 	argsPair->sim->step();
 	argsPair->run->output();
 }
-
-void glPointSize(GLfloat size) {}
-

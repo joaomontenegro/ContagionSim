@@ -10,10 +10,11 @@ public:
 	virtual ~ArenaRenderer();
 
 public:
-	void render() override;
+	void render(SDL_Renderer* _sdlRenderer) override;
 
 private:
 	bool _renderInfected = false; //todo
+	SDL_Point* _positions;
 };
 
 #endif

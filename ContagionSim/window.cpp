@@ -22,6 +22,7 @@ GLWindow::GLWindow(const std::string& title,
 		return;
 	}
 
+	//TODO create this in the GLRenderer so that it can use sdl drawing there
 	// Create the Sdl Renderer
 	_sdlRenderer = SDL_CreateRenderer(_sdlWindow, -1, SDL_RENDERER_PRESENTVSYNC);
 	if (!_sdlRenderer) {
@@ -43,8 +44,6 @@ GLWindow::GLWindow(const std::string& title,
 
 	// Set window title
 	SDL_SetWindowTitle(_sdlWindow, title.c_str());
-
-	_initGL();
 }
 
 GLWindow::~GLWindow()
@@ -79,43 +78,10 @@ bool GLWindow::processEvents()
 
 void GLWindow::draw()
 {
-	SDL_GL_MakeCurrent(_sdlWindow, *_glContext);
-	_renderer->render();
-	glFlush();
-	SDL_GL_SwapWindow(_sdlWindow);
+	_renderer->render(_sdlRenderer);
 	_prevDrawTime = SDL_GetTicks();
 }
 
 size_t GLWindow::getTimeSinceLastDraw() {
 	return SDL_GetTicks() - _prevDrawTime;
 }
-
-
-void GLWindow::_initGL()
-{
-	/* Our shading model--Gouraud (smooth). */
-	glShadeModel(GL_SMOOTH);
-
-	/* Culling. */
-	glCullFace(GL_BACK);
-	glFrontFace(GL_CCW);
-	glEnable(GL_CULL_FACE);
-
-	/* Set the clear color. */
-	glClearColor(0.0, 0.0, 0.0, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	/* Setup our viewport. */
-	glViewport(0, 0, _width, _height);
-
-	/*
-	 * Change to the projection matrix and set
-	 * our viewing volume.
-	 */
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	
-	/* Ortho projection */
-	glOrtho(0.f, (float)_width, (float)_height, 0.f, 0.f, 1.f);
-}
-

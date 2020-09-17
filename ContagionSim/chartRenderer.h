@@ -10,7 +10,7 @@ public:
 	virtual ~ChartRenderer() {}
 
 public:
-	void render() override {/*TODO*/}
+	void render(SDL_Renderer* sdlRenderer) override {/*TODO*/}
 };
 
 #endif

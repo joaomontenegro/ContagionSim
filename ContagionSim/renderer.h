@@ -3,13 +3,15 @@
 
 #include "simulation.h"
 
+#include <SDL.h>
+
 class GLRenderer
 {
 public:
 	GLRenderer(Simulation* sim) : _sim(sim) {}
 	virtual ~GLRenderer() {}
 
-	virtual void render() = 0;
+	virtual void render(SDL_Renderer* sdlRenderer=nullptr) = 0;
 
 protected:
 	Simulation* _sim;

@@ -26,3 +26,4 @@ if not exist "%OUTDIR%" mkdir %OUTDIR%
 
 :: Build
 call emcc %FILES% -s WASM=1 -O3 -s USE_SDL=2 -s LEGACY_GL_EMULATION=1 --preload-file Params/contagion.params -owasm.out/contagion.html
+

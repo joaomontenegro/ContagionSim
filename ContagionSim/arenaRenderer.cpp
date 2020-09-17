@@ -1,117 +1,63 @@
 #include "arenaRenderer.h"
 
-#include <SDL_opengl.h>
-
 ArenaRenderer::ArenaRenderer(Simulation* sim)
 	: GLRenderer(sim)
 {
+	_positions = new SDL_Point[sim->getNumAgents()];
 }
 
 ArenaRenderer::~ArenaRenderer()
 {
+	delete[] _positions;
 }
 
-#include <stdlib.h>
-#include <time.h> 
-
-void ArenaRenderer::render()
+void ArenaRenderer::render(SDL_Renderer* sdlRenderer)
 {
-
-	glClearColor(0.0, 0.0, 0.0, 0.0);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	glColor3f(1.0f, 1.0f, 1.0f);
-
-	glBegin(GL_TRIANGLES);
-	glColor3f(0.1, 0.2, 0.3);
-	glVertex3f(0, 0, 0);
-	glVertex3f(100, 0, 0);
-	glVertex3f(0, 100, 0);
-	glEnd();
-	glFlush();
-
-	return;
+	SDL_SetRenderDrawColor(sdlRenderer, 0x0, 0x0, 0x0, 0xFF);
+	SDL_RenderClear(sdlRenderer);
 
 	// Susceptible - White
-	glColor3f(1.0f, 1.0f, 1.0f);
-	glPointSize(3);
-	glBegin(GL_POINTS);
-	for (auto& agent : _sim->getAgents()) {
-		if (agent.isSusceptible()) {
-			glVertex2f(agent.x, agent.y);
-		}
+	for (size_t i = 0; i < _sim->getNumAgents(); ++i) {
+		// TODO: sort points by agent state
+		Agent& agent = _sim->getAgent(i);
+		_positions[i] = {(int)agent.x, (int)agent.y};
 	}
-	glEnd();
 
-	if (_renderInfected) {
-		// Infected - Red
-		glColor3f(1.0, 0.0, 0.0);
-		glPointSize(5);
-		glBegin(GL_POINTS);
-		for (auto& agent : _sim->getAgents()) {
-			if (agent.isInfected()) {
-				glVertex2f(agent.x, agent.y);
-			}
-		}
-		glEnd();
-	}
-	else {
+	// TODO: SDL_RenderSetScale(sdlRenderer, 3, 3);
 
-		// Asymptomatic - Yellow
-		glColor3f(0.75, 0.75, 0.0);
-		glPointSize(5);
-		glBegin(GL_POINTS);
-		for (auto& agent : _sim->getAgents()) {
-			if (agent.isAsymptomatic()) {
-				glVertex2f(agent.x, agent.y);
-			}
-		}
-		glEnd();
+    int pos = 0;
+	int len = (int)_sim->getNumSusceptible();
+	SDL_SetRenderDrawColor(sdlRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	SDL_RenderDrawPoints(sdlRenderer, _positions, len);
+	pos += len;
 
-		// Symptomatic - Orange
-		glColor3f(1.0f, 0.65f, 0.0f);
-		glPointSize(5);
-		glBegin(GL_POINTS);
-		for (auto& agent : _sim->getAgents()) {
-			if (agent.isSymptomatic()) {
-				glVertex2f(agent.x, agent.y);
-			}
-		}
-		glEnd();
+	// Asymptomatic - Yellow
+	len = (int)_sim->getNumAsymptomatic();
+	SDL_SetRenderDrawColor(sdlRenderer, 0xC0, 0xC0, 0x0, 0xFF);
+	SDL_RenderDrawPoints(sdlRenderer, _positions, len);
+	pos += len;
 
-		// Hospitalized - Red
-		glColor3f(0.8f, 0.0f, 0.0f);
-		glPointSize(5);
-		glBegin(GL_POINTS);
-		for (auto& agent : _sim->getAgents()) {
-			if (agent.isHospitalized()) {
-				glVertex2f(agent.x, agent.y);
-			}
-		}
-		glEnd();
+	// Symptomatic - Orange
+	len = (int)_sim->getNumSymptomatic();
+	SDL_SetRenderDrawColor(sdlRenderer, 0xFF, 0xA6, 0x0, 0xFF);
+	SDL_RenderDrawPoints(sdlRenderer, _positions, len);
+	pos += len;
 
-	}
+	// Hospitalized - Red
+	len = (int)_sim->getNumHospitalized();
+	SDL_SetRenderDrawColor(sdlRenderer, 0xCC, 0x0, 0x0, 0xFF);
+	SDL_RenderDrawPoints(sdlRenderer, _positions, len);
+	pos += len;
 
 	// Dead - Grey
-	glColor3f(0.5, 0.5, 0.5);
-	glPointSize(5);
-	glBegin(GL_POINTS);
-	for (auto& agent : _sim->getAgents()) {
-		if (agent.isDead()) {
-			glVertex2f(agent.x, agent.y);
-		}
-	}
-	glEnd();
+	len = (int)_sim->getNumDead();
+	SDL_SetRenderDrawColor(sdlRenderer, 0x7F, 0x7F, 0x7F, 0xFF);
+	SDL_RenderDrawPoints(sdlRenderer, _positions, len);
 
 	// Cured - Green
-	glColor3f(0.0, 0.5, 0.0);
-	glPointSize(3);
-	glBegin(GL_POINTS);
-	for (auto& agent : _sim->getAgents()) {
-		if (agent.isCured()) {
-			glVertex2f(agent.x, agent.y);
-		}
-	}
+	len = (int)_sim->getNumCured();
+	SDL_SetRenderDrawColor(sdlRenderer, 0x0, 0x80, 0x0, 0xFF);
+	SDL_RenderDrawPoints(sdlRenderer, _positions, len);
 
-	glEnd();
+	SDL_RenderPresent(sdlRenderer);
 }

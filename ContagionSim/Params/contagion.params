@@ -10,16 +10,16 @@ string    execution.type GL
 #
 # Simulation params
 int       simulation.numAgents  1000
-float     simulation.width      400.0
-float     simulation.height     300.0
+float     simulation.width      800.0
+float     simulation.height     600.0
 #
 # Collision params
 float     collision.radius    2.0
 float     collision.gridSize  5.0
 #
 # Movement params
-float     movement.minSpeed        0.1
-float     movement.maxSpeed        0.2
+float     movement.minSpeed        0.5
+float     movement.maxSpeed        0.8
 float     movement.dirChangeAngle  10.0
 #
 # Disease params

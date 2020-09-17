@@ -50,7 +50,7 @@ void GLWindowRun::output()
 {
 	if (_arenaWindow.getTimeSinceLastDraw() > _frameDuration) {
 		_arenaWindow.draw();
-		Log::info(std::to_string(_sim->getStepCount()));
+		Log::info("Step " + std::to_string(_sim->getStepCount()));
 	}		
 }
 

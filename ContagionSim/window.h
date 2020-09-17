@@ -4,7 +4,6 @@
 #include "renderer.h"
 
 #include <SDL.h>
-#include <SDL_opengl.h>
 
 class GLWindow
 {
@@ -19,8 +18,7 @@ public:
 	size_t  getTimeSinceLastDraw();
 
 private:
-	void _initGL();
-
+	
 	int _width;
 	int _height;
 
